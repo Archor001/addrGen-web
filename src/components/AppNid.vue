@@ -52,7 +52,7 @@
     },
     methods: {
       onSubmit: function () {
-        this.$http.post("http://10.12.171.50:2233/addressGeneration/register", {
+        this.$http.post("http://10.12.190.31:2233/addressGeneration/register", {
           userID: this.form.userID,
           password: this.form.password,
           phoneNumber: this.form.phoneNumber,
