@@ -1,6 +1,56 @@
 {
   "back": "返回",
+  "button": {
+    "addressQuery": "地址查询",
+    "generateAddress": "生成地址",
+    "register": "注册"
+  },
+  "holder": {
+    "password": "请输入密码",
+    "plsInput64Suffix": "请输入64位地址后缀(选填)",
+    "plsInputIPv6Address": "请输入IPv6地址",
+    "plsInputNid": "请输入NID",
+    "plsInputPassword": "请输入密码",
+    "plsInputPhoneNumber": "请输入手机号码",
+    "plsInputStandardISPPrefix": "请输入标准格式的ISP地址前缀(选填，例如2001:0250)",
+    "plsInputUserID": "请输入学号/工号",
+    "plsInputUsername": "请输入用户名",
+    "username": "请输入用户名"
+  },
+  "label": {
+    "ID": "学号/工号",
+    "IPv6Address": "IPv6地址",
+    "ISPPrefix": "ISP地址前缀",
+    "addressApply": "地址生成",
+    "addressQuery": "地址查询",
+    "information": "信息",
+    "password": "密码",
+    "phoneNumber": "手机号码",
+    "plsInputIPv6Address": "请输入ipv6地址",
+    "prefix": "前缀",
+    "registerTime": "注册时间",
+    "registryNID": "注册NID",
+    "status": "状态",
+    "suffix": "后缀",
+    "userID": "用户ID",
+    "username": "用户名"
+  },
+  "login": "登录",
+  "logout": "注销",
+  "tip": {
+    "applySuccess": "生成成功",
+    "querySuccess": "查询成功",
+    "registerSuccess": "注册成功"
+  },
   "title": {
+    "addressManage": "地址管理",
+    "applyAddress": "地址生成",
+    "applyNID": "账号注册",
     "userManage": "用户管理"
+  },
+  "user": {
+    "logout": "注销",
+    "name": "用户",
+    "password": "密码"
   }
 }

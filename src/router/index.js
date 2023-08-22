@@ -41,6 +41,10 @@ const routes = [
       name: 'AddressApply',
       component: () => import('../pages/user/AddressApply.vue')
     },{
+      path: 'query',
+      name: 'AddressQuery',
+      component: () => import('../pages/user/AddressQuery.vue')
+    },{
       path: 'nid',
       name: 'NidApply',
       component: () => import('../pages/user/NidApply.vue')

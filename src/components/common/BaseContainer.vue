@@ -14,7 +14,7 @@
       </div>
       
       <!--右侧-->
-      <div class="menubar" style="right: 0;">
+      <div class="menubar menubar-right" style="right: 0;">
         <el-dropdown @command="handleSelectLang">
             <i class="el-icon translate-icon el-tooltip__trigger">
               <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" width="1.2em" height="1.2em">
@@ -29,49 +29,39 @@
             </template>
           </el-dropdown>
         <slot name="right">
-          <el-dropdown>
-            <span class="el-dropdown-link user-name" style="margin-left: 20px;">
-              {{username}}<el-icon class="el-icon--right" style="transform: translateY(15%)"><arrow-down /></el-icon>
-            </span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item disabled>{{username}}</el-dropdown-item>
-                <el-dropdown-item @click="handleChangePasswd">{{t('user.password')}}</el-dropdown-item>
-                <el-dropdown-item @click="handleLogout">{{t('user.logout')}}</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
+          <div class="menu-button">
+            <el-button @click="handleLogin" v-if="isUser" text>{{ t('login') }}</el-button>
+            <el-button @click="handleLogout" v-else text>{{ t('logout') }}</el-button>
+          </div>
         </slot>
       </div>
     </el-header>
 
     <el-divider class="main-header-divider" />
 
-    <el-main style="width: 90%; text-align: center; margin: 0 auto;">
+    <el-main class="main-body">
       <slot></slot>
     </el-main>
 
-    <!-- 修改密码弹窗 -->
-    <el-dialog v-model="changepwdVisible" width="40%" :title="t('user.password')">
-      <el-form :model="password" ref="passwordFormRef" :rules="rules"
-        label-width="90px" label-position="left">
-        <el-form-item :label="t('password.old')" prop="old">
-          <el-input v-model="password.old" type="password" :placeholder="t('holder.pwdOld')">
-          </el-input>
+    <el-dialog v-model="loginVisible" width="25%" :title="t('login')" draggable>
+      <el-form :model="loginForm" :rules="loginRules" ref="loginRef" status-icon label-width="auto">
+        <el-form-item :label="t('label.username')" prop="username">
+          <el-input type="text"
+              v-model="loginForm.username"
+              auto-complete="off"
+              :placeholder="t('holder.username')"
+          ></el-input>
         </el-form-item>
-        <el-form-item :label="t('password.new')" prop="new">
-          <el-input v-model="password.new" type="password" :placeholder="t('holder.password')">
-          </el-input>
-        </el-form-item>
-        <el-form-item :label="t('password.again')" prop="again">
-          <el-input v-model="password.again" type="password" :placeholder="t('holder.pwdAgain')">
-          </el-input>
+        <el-form-item :label="t('label.password')" prop="password">
+          <el-input type="password"
+              v-model="loginForm.password"
+              auto-complete="off"
+              :placeholder="t('holder.password')"
+              @keyup.enter="confirmLogin()"
+          ></el-input>
         </el-form-item>
       </el-form>
-      <div style="text-align:right;">
-        <el-button type="danger" @click="changepwdVisible=false">{{t('cancel')}}</el-button>
-        <el-button type="primary" @click="confirmPassword(passwordFormRef)">{{t('confirm')}}</el-button>
-      </div>
+      <el-button type="primary" class="login-button" @click="confirmLogin()" :loading="waitLogin">{{t('login')}}</el-button>
     </el-dialog>
 
   </el-container>
@@ -82,8 +72,7 @@ import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'vuex';
 import { ref, computed, reactive } from 'vue';
-import { logout, changePassword } from '../../api/user';
-import { ArrowDown } from '@element-plus/icons-vue'
+import { login, logout, UserIdentityAdmin } from '../../api/user';
 const { t } = useI18n()
 const router = useRouter();
 const store = useStore();
@@ -100,15 +89,38 @@ function handleSelectLang(lang) {
   store.commit('changeLocale', lang)
 }
 
-// 用户相关
+const isUser = computed(() => {
+  return store.state.identity != UserIdentityAdmin
+})
 
-const username = computed(() => {
-  if(store.state.username.length > 0) {
-    return store.state.username
-  } else {
-    return t('user.name')
-  }
-});
+// 登录，弹窗
+const loginVisible = ref(false)
+const loginForm = ref({})
+const loginRef = ref(null)
+function handleLogin(){
+  loginVisible.value = true
+}
+
+const waitLogin = ref(false)
+function confirmLogin(){
+  if(waitLogin.value)
+    return
+  loginRef.value.validate((valid)=>{
+    if(valid){
+      waitLogin.value = true
+      login(loginForm.value.username, loginForm.value.password).then(response => {
+        store.commit('setIdentity', response.data['data'].identity)
+        store.commit('setUsername', response.data['data'].username)
+      }).catch(res => {
+        ElMessage.error(res.data.msg)
+      }).finally(()=>{
+        waitLogin.value = false
+      })
+    } else {
+      return false;
+    }
+  })
+}
 
 // 注销
 function handleLogout() {
@@ -122,14 +134,6 @@ function handleLogout() {
 }
 
 // 修改密码相关
-
-const passwordFormRef = ref()
-const changepwdVisible = ref(false)
-const password = reactive({
-  new: '',
-  old: '',
-  again: ''
-})
 
 const validatePass = (rule, value, callback) => {
   if (typeof value === 'string' && value.length < 8) {
@@ -153,7 +157,7 @@ const validatePass2 = (rule, value, callback) => {
   }
 }
 
-const rules = reactive({
+const loginRules = reactive({
   old: [{ required: true, message: t('holder.pwdOld'), trigger: 'blur' }],
   new: [{ required: true, message: t('holder.password'), trigger: 'blur' },
          { validator: validatePass, trigger: 'blur' }],
@@ -161,38 +165,14 @@ const rules = reactive({
               { validator: validatePass2, trigger: 'blur' }],
 })
 
-// 点击修改密码
-function handleChangePasswd() {
-  changepwdVisible.value = true
-}
-
-// 修改密码弹窗 点击确定
-function confirmPassword(form) {
-  if(!form) return
-  form.validate((valid) => {
-    if(valid) { // 表单校验通过
-      changePassword(password.old, password.new).then(response=>{
-        changepwdVisible.value = false
-        ElMessage({
-          message: t('password.success'),
-          type: 'success',
-        })
-      }).catch(response=>{
-        if(response.data.msg)
-          ElMessage.error(response.data.msg)
-      })
-    }
-  })
-  
-}
-
 </script>
 
 <style scoped>
 .main-header {
   position: sticky;
   top: 0;
-  background-color: white;
+  background-color: #1f2d3d;
+  color: white;
   z-index: 50;
   align-self: center;
   width: 100%;
@@ -218,10 +198,35 @@ function confirmPassword(form) {
   font-size: 18px;
   font-weight: 500;
 }
+.main-body{
+  width: 90%;
+  text-align: center;
+  margin: 0 auto;
+}
+.menubar-right{
+  display: flex;
+  align-items: center;
+}
 .translate-icon {
   cursor: pointer;
   font-size: 20px;
   position: relative;
-  top: 4px;
+  top: 1px;
+  color: #bfcbd9;
+}
+.menu-button .el-button{
+  margin-left: 10px;
+  font-size: 18px;
+  color: #bfcbd9;
+}
+.menu-button :deep(.el-button){
+  padding: 8px 8px;
+}
+.menu-button :deep(.el-button.is-text:hover){
+  background-color: #001528;
+}
+.login-button{
+  width: 30%;
+  margin-top: 10px;
 }
 </style>

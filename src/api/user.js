@@ -1,13 +1,17 @@
 import service from "./basic";
 
 export const UserIdentityAdmin = 1
-export const UserIdentityTeacher = 2
-export const UserIdentityStudent = 3
+export const UserIdentityUser = 2
 
 const LoginURL = '/api/login'
 const LogoutURL = '/api/logout'
-const ChangePasswordURL = '/api/passwd'
+const UserApplyURL = '/api/user/nid'
 const UserManageURL = '/api/admin/user'
+
+// 用户注册NID
+export function registerNID(user){
+  return service.put(UserApplyURL, user)
+}
 
 export function login(username, password) {
   return service.post(LoginURL, {
@@ -20,14 +24,9 @@ export function logout() {
   return service.post(LogoutURL);
 }
 
-export function changePassword(oldPassword, newPassword) {
-  return service.post(ChangePasswordURL, {oldPassword, newPassword})
-}
-
 export function addUser(user) {
   return service.put(UserManageURL, {
     Username: user.username,
-    Nickname: user.nickname,
     Password: user.password,
     Identity: user.identity
   })

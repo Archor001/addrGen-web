@@ -10,8 +10,8 @@ import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 
 // 语种列表
-import zhCn from 'element-plus/lib/locale/lang/zh-cn'
-import enUS from "element-plus/lib/locale/lang/en";
+import zhCn from 'element-plus/dist/locale/zh-cn'
+import enUS from "element-plus/dist/locale/en";
 
 // 切换语言
 let elLocale = ref(zhCn)

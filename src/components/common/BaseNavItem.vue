@@ -56,10 +56,10 @@ const isActive = computed(()=>{
 }
 
 .base-nav-item:hover .base-nav-item-text {
-    background-color: #f0f0f0;
+    background-color: #001528;
 }
 
 .base-nav-item.active {
-    border-bottom: 2px solid #595959;
+    border-bottom: 2px solid #f8f9fa;
 }
 </style>
