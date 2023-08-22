@@ -1,3 +1,6 @@
 {
-  
+  "back": "返回",
+  "title": {
+    "userManage": "用户管理"
+  }
 }

@@ -24,10 +24,10 @@ const routes = [
     component: () => import('../pages/AdminCenter.vue'),
     children: [{
       path: '',
-      name: 'AdminManage',
+      name: 'UserManage',
       component: () => import('../pages/admin/UserMng.vue')
     },{
-      path: '/address',
+      path: 'address',
       name: 'AddressManage',
       component: () => import('../pages/admin/AddressMng.vue')
     }]
@@ -41,7 +41,7 @@ const routes = [
       name: 'AddressApply',
       component: () => import('../pages/user/AddressApply.vue')
     },{
-      path: '/nid',
+      path: 'nid',
       name: 'NidApply',
       component: () => import('../pages/user/NidApply.vue')
     }]
