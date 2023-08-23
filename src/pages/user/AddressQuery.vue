@@ -15,23 +15,45 @@
         <el-button type="primary" @click="handleQueryAddress()" class="addr-query-button" :loading="waitQuery">{{ t('button.addressQuery') }}</el-button>
       </div>
 
-      
-      <div class="addr-query-table">
-        <el-table :data="addrQueryData" :header-cell-style="{ 'text-align': 'center' }" v-show="addrQueryVisible">
-          <el-table-column prop="status" :label="t('label.status')" width="80" align="center">
-          </el-table-column>
-          <el-table-column prop="message" :label="t('label.information')" width="160" align="center">
-          </el-table-column>
-          <el-table-column prop="userID" :label="t('label.userID')" width="160" align="center">
-          </el-table-column>
-          <el-table-column prop="phoneNumber" :label="t('label.phoneNumber')" width="160" align="center">
-          </el-table-column>
-          <el-table-column prop="registerTime" :label="t('label.registerTime')" width="160" align="center">
-          </el-table-column>
-          <el-table-column prop="userName" :label="t('label.username')" width="160" align="center">
-          </el-table-column>
-        </el-table>
+      <!-- Result -->
+      <div class="addr-query-result" v-if="isQueried">
+        <div class="addr-query-result-header">{{ !!queryResult ? t('label.addressQuerySuccess') : t('label.addressQueryFail') }}</div>
+        <el-descriptions :column="2" size="default" border v-if="!!queryResult">
+          <el-descriptions-item align="center">
+            <template #label>
+              <div style="display: flex; align-items: center; justify-content: center;">
+                <span style="margin-left: 15px; font-size: 16px;">{{ t('label.userID') }}</span>
+              </div>
+            </template>
+            <span>{{ queryResult.userID }}</span>
+          </el-descriptions-item>
+          <el-descriptions-item align="center">
+            <template #label>
+              <div style="display: flex; align-items: center; justify-content: center;">
+                <span style="margin-left: 15px; font-size: 16px;">{{ t('label.phoneNumber') }}</span>
+              </div>
+            </template>
+            <span>{{ queryResult.phoneNumber }}</span>
+          </el-descriptions-item>
+          <el-descriptions-item align="center">
+            <template #label>
+              <div style="display: flex; align-items: center; justify-content: center;">
+                <span style="margin-left: 15px; font-size: 16px;">{{ t('label.registerTime') }}</span>
+              </div>
+            </template>
+            <span>{{ queryResult.registerTime }}</span>
+          </el-descriptions-item>
+          <el-descriptions-item align="center">
+            <template #label>
+              <div style="display: flex; align-items: center; justify-content: center;">
+                <span style="margin-left: 15px; font-size: 16px;">{{ t('label.username') }}</span>
+              </div>
+            </template>
+            <span>{{ queryResult.username }}</span>
+          </el-descriptions-item>
+        </el-descriptions>
       </div>
+
     </div>
   </div>
   
@@ -43,17 +65,21 @@ import { queryAddress } from '../../api/address'
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
-const queryForm = ref('')
+const queryForm = ref({})
 const queryFormRef = ref(null)
+const queryResult = ref({})
 
 // 地址查询
 const waitQuery = ref(false)
+const isQueried = ref(false)
 function handleQueryAddress(){
   queryFormRef.value.validate((valid) => {
     if(valid){
       waitQuery.value = true
-      queryAddress(queryForm.value).then(response => {
+      isQueried.value = true
+      queryAddress(queryForm.value.queryAddress, queryForm.value.prefix).then(response => {
         ElMessage.success(t('tip.querySuccess'))
+        queryResult.value = response.data.info
       }).catch(res => {
         ElMessage.error(res.data.msg)
       }).finally(()=>{
@@ -65,12 +91,19 @@ function handleQueryAddress(){
 
 const queryRules = {
   queryAddress: [{required: true, message: t('holder.plsInputIPv6Address'), trigger: 'blur'}],
+  prefix: [{required: true, message: t('holder.plsInputStandardISPPrefix'), trigger: 'blur'}]
 }
 
 </script>
 
 <style scoped>
+.addr-query-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .addr-query{
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -92,5 +125,15 @@ const queryRules = {
 }
 .addr-query-button{
   margin: 5px 0 15px;
+}
+.addr-query-result{
+  width: 50%;
+  margin-top: 20px;
+  padding: 15px;
+}
+.addr-query-result-header{
+  font-size: 18px;
+  font-weight: bold;
+  padding: 15px;
 }
 </style>

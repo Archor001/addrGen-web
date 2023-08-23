@@ -1,82 +1,82 @@
 <template>
-  <div class="nid-apply">
-    <span class="nid-apply-header">{{ t('label.registryNID') }}</span>
-    <el-form :model="nidForm" label-width="auto" class="nid-apply-form" ref="nidFormRef" :rules="applyRules">
-      <el-form-item :label="t('label.userID')" prop="userID">
-        <el-input v-model="nidForm.userID" :placeholder="t('holder.plsInputUserID')"></el-input>
-      </el-form-item>
-      <el-form-item :label="t('label.password')" prop="password">
-        <el-input v-model="nidForm.password" show-password :placeholder="t('holder.plsInputPassword')"></el-input>
-      </el-form-item>
-      <el-form-item :label="t('label.phoneNumber')" prop="phoneNumber">
-        <el-input v-model="nidForm.phoneNumber" :placeholder="t('holder.plsInputPhoneNumber')"></el-input>
-      </el-form-item>
-      <el-form-item :label="t('label.username')" prop="username">
-        <el-input v-model="nidForm.name" :placeholder="t('holder.plsInputUsername')"></el-input>
-      </el-form-item>
-    </el-form>
-    <div>
-      <el-button type="primary" @click="handleRegistry()" class="nid-apply-button" :loading="waitApply">{{ t('button.register') }}</el-button>
+  <div class="nid-apply-container">
+    <user-register @register="confirmRegister"></user-register>
+    <!-- Result -->
+    <div class="nid-apply-result" v-if="isApplied">
+      <div class="nid-apply-result-header">{{ !!applyInfo ? t('label.nidApplySuccess') : t('label.nidApplyFail') }}</div>
+      <el-descriptions :column="2" size="default" border v-if="!!applyInfo">
+        <el-descriptions-item align="center">
+          <template #label>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <el-icon><User theme="filled" size="20" fill="#4a90e2" /></el-icon>
+              <span style="margin-left: 15px; font-size: 16px;">{{ t('label.username') }}</span>
+            </div>
+          </template>
+          <span>{{ applyInfo.username }}</span>
+        </el-descriptions-item>
+        <el-descriptions-item align="center">
+          <template #label>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <el-icon><User theme="outline" size="20" fill="#4a90e2"/></el-icon>
+              <span style="margin-left: 15px; font-size: 16px;">{{ t('label.userID') }}</span>
+            </div>
+          </template>
+          <span>{{ applyInfo.userID }}</span>
+        </el-descriptions-item>
+        <el-descriptions-item align="center">
+          <template #label>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <el-icon><Phone theme="filled" size="20" fill="#4a90e2" /></el-icon>
+              <span style="margin-left: 15px; font-size: 16px;">{{ t('label.phoneNumber') }}</span>
+            </div>
+          </template>
+          <span>{{ applyInfo.phoneNumber }}</span>
+        </el-descriptions-item>
+        <el-descriptions-item align="center">
+          <template #label>
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <el-icon><IdCardV theme="filled" size="20" fill="#4a90e2" /></el-icon>
+              <span style="margin-left: 15px; font-size: 16px;">{{ t('label.NID') }}</span>
+            </div>
+          </template>
+          <span>{{ applyInfo.nid }}</span>
+        </el-descriptions-item>
+      </el-descriptions>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { User, Phone, IdCardV } from '@icon-park/vue-next';
 import { useI18n } from 'vue-i18n';
-import { registerNID } from '../../api/user'
+import { ref } from 'vue';
+import UserRegister from '../../components/user/UserRegister.vue'
 const { t } = useI18n()
 
-const nidForm = ref('')
-const nidFormRef = ref(null)
-
-const applyRules = {
-  userID: [{required: true, message: t('holder.plsInputUserID'), trigger: 'blur'}],
-  password: [{required: true, message: t('holder.plsInputPassword'), trigger: 'blur'}],
-  phoneNumber: [{required: true, message: t('holder.plsInputPhoneNumber'), trigger: 'blur'}],
-  username: [{required: true, message: t('holder.plsInputUsername'), trigger: 'blur'}],
-}
-
-const waitApply = ref(false)
-function handleRegistry(){
-  nidFormRef.value.validate((valid) => {
-    if(valid){
-      waitApply.value = true
-      registerNID(nidForm.value).then(response => {
-        ElMessage.success(t('tip.registerSuccess'))
-      }).catch(res => {
-        ElMessage.error(res.data.msg)
-      }).finally(()=>{
-        waitApply.value = false
-      })
-    }
-  })
+// 注册成功
+const applyInfo = ref({})
+const isApplied = ref(false)
+function confirmRegister(data){
+  isApplied.value = true
+  applyInfo.value = data
 }
 
 </script>
 
 <style scoped>
-.nid-apply{
+.nid-apply-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
 }
-.nid-apply-header{
-  width: 90%;
-  margin: 0 auto 30px;
-  padding: 10px;
-  font-size: 20px;
+.nid-apply-result{
+  width: 50%;
+  margin-top: 20px;
+  padding: 15px;
+}
+.nid-apply-result-header{
+  font-size: 18px;
   font-weight: bold;
-  color: #343a40;
-  font-family:'Times New Roman', Times, serif, Georgia,"Microsoft YaHei",sans-serif;
-  text-align: left;
-  border-bottom: 1px solid #eeeeee;
-}
-.nid-apply-form{
-  width: 60%;
-}
-.nid-apply-button{
-  margin: 5px 0 15px;
+  padding: 15px;
 }
 </style>

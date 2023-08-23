@@ -2,7 +2,7 @@
   <base-container>
     <template #center>
       <base-nav-item name="UserManage">{{t('title.userManage')}}</base-nav-item>
-      <base-nav-item name="AddressManage">{{ t('title.addressManage') }}</base-nav-item>
+      <!-- <base-nav-item name="AddressManage">{{ t('title.addressManage') }}</base-nav-item> -->
     </template>
     <router-view></router-view>
   </base-container>

@@ -4,7 +4,6 @@ export const UserIdentityAdmin = 1
 export const UserIdentityUser = 2
 
 const LoginURL = '/api/login'
-const LogoutURL = '/api/logout'
 const UserApplyURL = '/api/user/nid'
 const UserManageURL = '/api/admin/user'
 
@@ -18,10 +17,6 @@ export function login(username, password) {
     username: username,
     password: password,
   });
-}
-
-export function logout() {
-  return service.post(LogoutURL);
 }
 
 export function addUser(user) {
@@ -50,10 +45,10 @@ export function deleteUser(id) {
   })
 }
 
-export function getUser(offset, limit, identities = []) {
+export function getUser(offset, limit, content) {
   return service.get(UserManageURL,{
     params: {
-      offset,limit,identities
+      offset,limit,content
     }
   })
 }

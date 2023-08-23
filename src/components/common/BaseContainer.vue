@@ -30,7 +30,7 @@
           </el-dropdown>
         <slot name="right">
           <div class="menu-button">
-            <el-button @click="handleLogin" v-if="isUser" text>{{ t('login') }}</el-button>
+            <el-button @click="handleLogin" v-if="isUser" text>{{ t('title.switchToAdmin') }}</el-button>
             <el-button @click="handleLogout" v-else text>{{ t('logout') }}</el-button>
           </div>
         </slot>
@@ -72,7 +72,7 @@ import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'vuex';
 import { ref, computed, reactive } from 'vue';
-import { login, logout, UserIdentityAdmin } from '../../api/user';
+import { login, UserIdentityAdmin, UserIdentityUser } from '../../api/user';
 const { t } = useI18n()
 const router = useRouter();
 const store = useStore();
@@ -109,9 +109,11 @@ function confirmLogin(){
     if(valid){
       waitLogin.value = true
       login(loginForm.value.username, loginForm.value.password).then(response => {
-        store.commit('setIdentity', response.data['data'].identity)
-        store.commit('setUsername', response.data['data'].username)
+        store.commit('setIdentity', UserIdentityAdmin)
+        router.replace({path: '/'})
+        ElMessage.success(t('tip.loginSuccess'))
       }).catch(res => {
+        console.log(res)
         ElMessage.error(res.data.msg)
       }).finally(()=>{
         waitLogin.value = false
@@ -124,45 +126,13 @@ function confirmLogin(){
 
 // 注销
 function handleLogout() {
-  logout().then(response => {}).catch(error => {}).finally(() => {
-    store.commit('setUsername')
-    store.commit('setIdentity')
-    router.replace({
-      name: 'Login'
-    });
-  });
-}
-
-// 修改密码相关
-
-const validatePass = (rule, value, callback) => {
-  if (typeof value === 'string' && value.length < 8) {
-    callback(new Error(t('error.unsafePwd')))
-  } else {
-    if (password.again !== '') {
-      if (!passwordFormRef.value) return
-      passwordFormRef.value.validateField('again', () => null)
-    }
-    callback()
-  }
-}
-
-const validatePass2 = (rule, value, callback) => {
-  if (value === '') {
-    callback(new Error(t('holder.password')))
-  } else if (value !== password.new) {
-    callback(new Error(t('error.differentPwd')))
-  } else {
-    callback()
-  }
+  store.commit('setIdentity', UserIdentityUser)
+  router.replace({path: '/'});
 }
 
 const loginRules = reactive({
-  old: [{ required: true, message: t('holder.pwdOld'), trigger: 'blur' }],
-  new: [{ required: true, message: t('holder.password'), trigger: 'blur' },
-         { validator: validatePass, trigger: 'blur' }],
-  again: [{ required: true, message: t('holder.password'), trigger: 'blur' },
-              { validator: validatePass2, trigger: 'blur' }],
+  username: [{ required: true, message: t('holder.plsInputUsername'), trigger: 'blur' }],
+  password: [{ required: true, message: t('holder.plsInputPassword'), trigger: 'blur' }],
 })
 
 </script>
