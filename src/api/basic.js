@@ -30,6 +30,8 @@ export const CodeGetKeyFail = 10007         // 获取密钥出错
 export const CodeDecryptFail = 10008        // 解密出错
 export const CodeEncryptFail = 10009        // 加密出错
 export const CodeGetUserFail = 10010        // 获取用户失败
+export const CodeAddressAlreadyApplied = 10011      // 地址已生成
+export const CodeInvalidPhone = 10012       // 手机号码不合法
 
 function getMsgByCode(code) {
   switch(code) {
@@ -68,6 +70,10 @@ function getMsgByCode(code) {
       return i18n.global.t('error.encryptFail')
     case CodeGetUserFail:
       return i18n.global.t('error.getUserFail')
+    case CodeAddressAlreadyApplied:
+      return i18n.global.t('error.addressAlreadyApplied')
+    case CodeInvalidPhone:
+      return i18n.global.t('error.invalidPhone')
     default:
       return i18n.global.t('error.unknown')
   }

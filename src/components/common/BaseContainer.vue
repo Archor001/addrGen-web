@@ -113,7 +113,6 @@ function confirmLogin(){
         router.replace({path: '/'})
         ElMessage.success(t('tip.loginSuccess'))
       }).catch(res => {
-        console.log(res)
         ElMessage.error(res.data.msg)
       }).finally(()=>{
         waitLogin.value = false

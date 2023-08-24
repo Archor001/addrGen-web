@@ -16,7 +16,7 @@
       </div>
 
       <!-- Result -->
-      <div class="addr-query-result" v-if="isQueried">
+      <div class="addr-query-result" v-if="queryResultType">
         <div class="addr-query-result-header">{{ !!queryResult ? t('label.addressQuerySuccess') : t('label.addressQueryFail') }}</div>
         <el-descriptions :column="2" size="default" border v-if="!!queryResult">
           <el-descriptions-item align="center">
@@ -61,7 +61,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { queryAddress } from '../../api/address'
+import { queryAddress, ResultTypeSuccess, ResultTypeSuccess } from '../../api/address'
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
@@ -71,19 +71,21 @@ const queryResult = ref({})
 
 // 地址查询
 const waitQuery = ref(false)
-const isQueried = ref(false)
+const queryResultType = ref(0)
 function handleQueryAddress(){
   queryFormRef.value.validate((valid) => {
     if(valid){
       waitQuery.value = true
-      isQueried.value = true
       queryAddress(queryForm.value.queryAddress, queryForm.value.prefix).then(response => {
         ElMessage.success(t('tip.querySuccess'))
         queryResult.value = response.data.info
+        queryResultType.value = ResultTypeSuccess
       }).catch(res => {
         ElMessage.error(res.data.msg)
+        queryResultType.value = ResultTypeFail
       }).finally(()=>{
         waitQuery.value = false
+        queryResultType.value = 0
       })
     }
   })

@@ -27,7 +27,7 @@
     </div>
 
     <!-- Result -->
-    <div class="addr-generate-result" v-if="isApplied">
+    <div class="addr-generate-result" v-if="applyResultType">
       <div class="addr-generate-result-header">{{ !!applyResult ? t('label.addressApplySuccess') : t('label.addressApplyFail') }}</div>
       <el-descriptions :column="2" size="default" border v-if="!!applyResult">
         <el-descriptions-item align="center">
@@ -46,7 +46,7 @@
 
 <script setup>
 import { Send } from '@icon-park/vue-next';
-import { applyAddress } from '../../api/address'
+import { applyAddress, ResultTypeSuccess, ResultTypeFail } from '../../api/address'
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -58,19 +58,21 @@ const applyResult = ref('')   // 地址生成结果
 
 // 地址生成
 const waitGenerate = ref(false)
-const isApplied = ref(false)
+const applyResultType = ref(0)
 function handleGenerateAddress(){
   applyFormRef.value.validate((valid) => {
     if(valid){
       waitGenerate.value = true
-      isApplied.value = true
       applyAddress(applyForm.value).then(response => {
         ElMessage.success(t('tip.applySuccess'))
         applyResult.value = response.data.address
+        applyResultType.value = ResultTypeSuccess
       }).catch(res => {
         ElMessage.error(res.data.msg)
+        applyResultType.value = ResultTypeSuccess
       }).finally(()=>{
         waitGenerate.value = false
+        applyResultType.value = 0
       })
     } else {
       return

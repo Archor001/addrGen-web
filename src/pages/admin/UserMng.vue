@@ -1,5 +1,5 @@
 <template>
-  <div class="user-managent-page">
+  <div class="user-management-page">
     <el-row justify="space-between">
       <el-col :span="6" style="text-align: left">
         <el-button type="primary" plain round @click="addUserVisible = true">{{ t('button.register') + t('label.user') }}</el-button>
@@ -23,12 +23,20 @@
         </el-table-column>
         <el-table-column align="center" :label="t('label.phoneNumber')" prop="phoneNumber">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.address')" prop="address">
+        <el-table-column align="center" :label="t('label.address')">
+          <template #default="scope">
+            <el-tag v-if="!!scope.row.address && scope.row.address.length > 0" type="primary">{{ scope.row.address }}</el-tag>
+            <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
+          </template>
         </el-table-column>
-        <el-table-column align="center" :label="t('label.registerTime')" prop="registerTime">
+        <el-table-column align="center" :label="t('label.registerTime')">
+          <template #default="scope">
+            <el-tag v-if="!!scope.row.registerTime" type="primary">{{ formatStamp(scope.row.registerTime) }}</el-tag>
+            <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
+          </template>
         </el-table-column>
       </el-table>
-      <el-row style="margin-top:16px;" justify="center">
+      <el-row style="margin-top:32px;" justify="center">
           <el-pagination v-model:currentPage="currentPage" v-model:page-size="pageSize"
             :page-sizes="[10, 15, 20, 25, 30]" background layout="total, sizes, prev, pager, next, jumper"
             :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
@@ -49,6 +57,7 @@
 import { Search } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
 import { getUser } from '../../api/user'
+import { formatStamp } from '../../utils/index'
 import UserRegister from '../../components/user/UserRegister.vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
@@ -103,7 +112,7 @@ function handleSizeChange(val){
 
 <style scoped>
 .user-management-page {
-  padding: 32px;
+  padding: 16px 32px;
   position: relative;
   height: 100%;
   background-size: 100% 100%;
