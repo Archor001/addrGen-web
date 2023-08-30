@@ -24,7 +24,7 @@ export const CodeNeedLogin = 10001
 export const CodeRegisterFail = 10002       // 用户注册失败
 export const CodeGenerateFail = 10003       // 地址生成失败
 export const CodeQueryFail = 10004          // 地址查询失败
-export const CodeWrongPasswd = 10005
+export const CodeWrongPasswd = 10005        // 密码错误
 export const CodeNeedNID = 10006            // 缺少NID，需要注册
 export const CodeGetKeyFail = 10007         // 获取密钥出错
 export const CodeDecryptFail = 10008        // 解密出错
@@ -32,6 +32,8 @@ export const CodeEncryptFail = 10009        // 加密出错
 export const CodeGetUserFail = 10010        // 获取用户失败
 export const CodeAddressAlreadyApplied = 10011      // 地址已生成
 export const CodeInvalidPhone = 10012       // 手机号码不合法
+export const CodeDeleteUserFail = 10013     // 删除用户失败
+export const CodeUserNotExist = 10014       // 用户不存在
 
 function getMsgByCode(code) {
   switch(code) {
@@ -74,6 +76,10 @@ function getMsgByCode(code) {
       return i18n.global.t('error.addressAlreadyApplied')
     case CodeInvalidPhone:
       return i18n.global.t('error.invalidPhone')
+    case CodeDeleteUserFail:
+      return i18n.global.t('error.deleteUserFail')
+    case CodeUserNotExist:
+      return i18n.global.t('error.userNotExist')
     default:
       return i18n.global.t('error.unknown')
   }

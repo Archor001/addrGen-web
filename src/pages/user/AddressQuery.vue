@@ -61,7 +61,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { queryAddress, ResultTypeSuccess, ResultTypeSuccess } from '../../api/address'
+import { queryAddress, ResultTypeSuccess } from '../../api/address'
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 

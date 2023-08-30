@@ -37,10 +37,10 @@ export function editUser(user) {
   })
 }
 
-export function deleteUser(id) {
+export function deleteUser(nid) {
   return service.delete(UserManageURL, {
     params: {
-      ID: id
+      nid
     }
   })
 }

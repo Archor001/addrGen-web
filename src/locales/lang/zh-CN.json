@@ -1,7 +1,11 @@
 {
+  "ask": {
+    "deleteUser": "确定删除此用户？"
+  },
   "back": "返回",
   "button": {
     "addressQuery": "地址查询",
+    "delete": "删除",
     "generateAddress": "生成地址",
     "register": "注册"
   },
@@ -10,6 +14,7 @@
   "error": {
     "addressAlreadyApplied": "地址已生成，请勿重复生成",
     "decryptFail": "解密失败",
+    "deleteUserFail": "删除用户失败",
     "encryptFail": "加密失败",
     "generateAddressFail": "地址生成失败",
     "getKeyFail": "获取密钥出错",
@@ -22,6 +27,7 @@
     "registerFail": "用户注册失败",
     "server": "服务错误",
     "unknown": "未知错误",
+    "userNotExist": "用户不存在",
     "wrongPasswd": "密码错误"
   },
   "holder": {
@@ -54,6 +60,7 @@
     "nidApplyFail": "用户注册失败！",
     "nidApplySuccess": "用户注册成功！已分配NID",
     "notApplyYet": "暂未生成",
+    "option": "操作",
     "password": "密码",
     "phoneNumber": "手机号码",
     "plsInputIPv6Address": "请输入ipv6地址",
@@ -70,6 +77,7 @@
   "logout": "注销",
   "tip": {
     "applySuccess": "生成成功",
+    "deleteSuccess": "删除成功",
     "loginSuccess": "登录成功",
     "querySuccess": "查询成功",
     "registerSuccess": "注册成功"

@@ -35,9 +35,14 @@
             <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
           </template>
         </el-table-column>
+        <el-table-column align="center" :label="t('label.option')">
+          <template #default="scope">
+            <el-button type="danger" plain @click="handleDeleteUser(scope.row)" size="small">{{ t('button.delete') }}</el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <el-row style="margin-top:32px;" justify="center">
-          <el-pagination v-model:currentPage="currentPage" v-model:page-size="pageSize"
+          <el-pagination v-model:currentPage="currentPage" v-model:page-size="pageSize" hide-on-single-page
             :page-sizes="[10, 15, 20, 25, 30]" background layout="total, sizes, prev, pager, next, jumper"
             :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
         </el-row>
@@ -56,7 +61,7 @@
 <script setup>
 import { Search } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
-import { getUser } from '../../api/user'
+import { getUser, deleteUser } from '../../api/user'
 import { formatStamp } from '../../utils/index'
 import UserRegister from '../../components/user/UserRegister.vue';
 import { useI18n } from 'vue-i18n';
@@ -96,6 +101,20 @@ function handleGetUser(){
   })
 }
 
+// 删除用户
+function handleDeleteUser(user){
+  ElMessageBox.confirm(t('ask.deleteUser'),'Tip',{
+    confirmButtonText: t('confirm'),
+    cancelButtonText: t('cancel')
+  }).then(() => {
+    deleteUser(user.nid).then(response => {
+      ElMessage.success(t('tip.deleteSuccess'))
+      handleGetUser()
+    }).catch(res => {
+      ElMessage.error(res.data.msg)
+    })
+  })
+}
 
 // 分页
 function handleCurrentChange(val){
