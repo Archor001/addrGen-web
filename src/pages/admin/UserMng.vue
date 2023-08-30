@@ -29,6 +29,12 @@
             <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
           </template>
         </el-table-column>
+        <el-table-column align="center" :label="t('label.ISPPrefix')">
+          <template #default="scope">
+            <el-tag v-if="!!scope.row.prefix && scope.row.prefix.length > 0" type="primary">{{ scope.row.prefix }}</el-tag>
+            <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column align="center" :label="t('label.registerTime')">
           <template #default="scope">
             <el-tag v-if="!!scope.row.registerTime" type="primary">{{ formatStamp(scope.row.registerTime) }}</el-tag>
@@ -49,7 +55,7 @@
     </el-row>
 
     <el-dialog v-model="addUserVisible" draggable>
-      <user-register @success="confirmAddUser">
+      <user-register @register="confirmAddUser">
         <template #cancel>
           <el-button type="danger" @click="addUserVisible = false">{{ t('cancel') }}</el-button>
         </template>
@@ -81,6 +87,7 @@ const addUserVisible = ref(false)
 
 // 新增用户成功
 function confirmAddUser(info){
+  addUserVisible.value = false
   handleGetUser()
 }
 

@@ -27,16 +27,16 @@
     </div>
 
     <!-- Result -->
-    <div class="addr-generate-result" v-if="applyResultType">
+    <div class="addr-generate-result" v-if="!!applyResultType">
       <div class="addr-generate-result-header">{{ !!applyResult ? t('label.addressApplySuccess') : t('label.addressApplyFail') }}</div>
       <el-descriptions :column="2" size="default" border v-if="!!applyResult">
         <el-descriptions-item align="center">
           <template #label>
             <div style="display: flex; align-items: center; justify-content: center;">
-              <span style="margin-left: 15px; font-size: 16px;">{{ t('label.address') }}</span>
+              <span style="font-size: 18px;">{{ t('label.address') }}</span>
             </div>
           </template>
-          <span>{{ applyResult }}</span>
+          <span style="font-size: 18px;">{{ applyResult }}</span>
         </el-descriptions-item>
       </el-descriptions>
     </div>
@@ -65,14 +65,13 @@ function handleGenerateAddress(){
       waitGenerate.value = true
       applyAddress(applyForm.value).then(response => {
         ElMessage.success(t('tip.applySuccess'))
-        applyResult.value = response.data.address
+        applyResult.value = response.data.address || ''
         applyResultType.value = ResultTypeSuccess
       }).catch(res => {
         ElMessage.error(res.data.msg)
-        applyResultType.value = ResultTypeSuccess
+        applyResultType.value = ResultTypeFail
       }).finally(()=>{
         waitGenerate.value = false
-        applyResultType.value = 0
       })
     } else {
       return
@@ -120,7 +119,8 @@ const applyRules = {
 .addr-generate-result{
   width: 50%;
   margin-top: 20px;
-  padding: 15px;
+  padding: 30px;
+  border-radius: 15px;
 }
 .addr-generate-result-header{
   font-size: 18px;

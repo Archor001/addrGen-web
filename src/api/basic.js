@@ -34,6 +34,8 @@ export const CodeAddressAlreadyApplied = 10011      // 地址已生成
 export const CodeInvalidPhone = 10012       // 手机号码不合法
 export const CodeDeleteUserFail = 10013     // 删除用户失败
 export const CodeUserNotExist = 10014       // 用户不存在
+export const CodePhoneRegistered = 10015    // 手机号已注册
+export const CodeAddressNotExist = 10016    // 地址不存在
 
 function getMsgByCode(code) {
   switch(code) {
@@ -80,6 +82,10 @@ function getMsgByCode(code) {
       return i18n.global.t('error.deleteUserFail')
     case CodeUserNotExist:
       return i18n.global.t('error.userNotExist')
+    case CodePhoneRegistered:
+      return i18m.global.t('error.phoneRegistered')
+    case CodeAddressNotExist:
+      return i18n.global.t('error.addressNotExist')
     default:
       return i18n.global.t('error.unknown')
   }

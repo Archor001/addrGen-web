@@ -13,6 +13,7 @@
   "confirm": "确认",
   "error": {
     "addressAlreadyApplied": "地址已生成，请勿重复生成",
+    "addressNotExist": "查询地址不存在",
     "decryptFail": "解密失败",
     "deleteUserFail": "删除用户失败",
     "encryptFail": "加密失败",
@@ -23,6 +24,7 @@
     "loginTimeout": "登录超时",
     "missingNID": "缺少NID，请注册",
     "needLogin": "需要登录",
+    "phoneRegistered": "手机号已注册",
     "queryAddressFail": "地址查询失败",
     "registerFail": "用户注册失败",
     "server": "服务错误",

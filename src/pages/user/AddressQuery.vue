@@ -16,40 +16,44 @@
       </div>
 
       <!-- Result -->
-      <div class="addr-query-result" v-if="queryResultType">
-        <div class="addr-query-result-header">{{ !!queryResult ? t('label.addressQuerySuccess') : t('label.addressQueryFail') }}</div>
-        <el-descriptions :column="2" size="default" border v-if="!!queryResult">
+      <div class="addr-query-result" v-if="!!queryResultType">
+        <div class="addr-query-result-header">{{ (queryResultType == ResultTypeSuccess) ? t('label.addressQuerySuccess') : t('label.addressQueryFail') }}</div>
+        <el-descriptions :column="2" size="default" border v-if="(queryResultType == ResultTypeSuccess)">
           <el-descriptions-item align="center">
             <template #label>
               <div style="display: flex; align-items: center; justify-content: center;">
-                <span style="margin-left: 15px; font-size: 16px;">{{ t('label.userID') }}</span>
+                <el-icon><User theme="outline" size="20" fill="#4a90e2"/></el-icon>
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.userID') }}</span>
               </div>
             </template>
-            <span>{{ queryResult.userID }}</span>
+            <span class="addr-query-result-font">{{ queryResult.userID }}</span>
           </el-descriptions-item>
           <el-descriptions-item align="center">
             <template #label>
-              <div style="display: flex; align-items: center; justify-content: center;">
-                <span style="margin-left: 15px; font-size: 16px;">{{ t('label.phoneNumber') }}</span>
+              <div style="display: flex; align-items: center;justify-content: center;">
+                <el-icon><Phone theme="filled" size="20" fill="#4a90e2" /></el-icon>
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.phoneNumber') }}</span>
               </div>
             </template>
-            <span>{{ queryResult.phoneNumber }}</span>
+            <span class="addr-query-result-font">{{ queryResult.phoneNumber }}</span>
           </el-descriptions-item>
           <el-descriptions-item align="center">
             <template #label>
-              <div style="display: flex; align-items: center; justify-content: center;">
-                <span style="margin-left: 15px; font-size: 16px;">{{ t('label.registerTime') }}</span>
+              <div style="display: flex; align-items: center;justify-content: center;">
+                <el-icon><Time theme="outline" size="20" fill="#4a90e2" /></el-icon>
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.registerTime') }}</span>
               </div>
             </template>
-            <span>{{ queryResult.registerTime }}</span>
+            <span class="addr-query-result-font">{{ queryResult.registerTime }}</span>
           </el-descriptions-item>
           <el-descriptions-item align="center">
             <template #label>
-              <div style="display: flex; align-items: center; justify-content: center;">
-                <span style="margin-left: 15px; font-size: 16px;">{{ t('label.username') }}</span>
+              <div style="display: flex; align-items: center;justify-content: center;">
+                <el-icon><User theme="filled" size="20" fill="#4a90e2" /></el-icon>
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.username') }}</span>
               </div>
             </template>
-            <span>{{ queryResult.username }}</span>
+            <span class="addr-query-result-font">{{ queryResult.username }}</span>
           </el-descriptions-item>
         </el-descriptions>
       </div>
@@ -60,8 +64,9 @@
 </template>
 
 <script setup>
+import { Phone, Time, User } from '@icon-park/vue-next';
 import { ref } from 'vue';
-import { queryAddress, ResultTypeSuccess } from '../../api/address'
+import { queryAddress, ResultTypeSuccess, ResultTypeFail } from '../../api/address'
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
@@ -85,7 +90,6 @@ function handleQueryAddress(){
         queryResultType.value = ResultTypeFail
       }).finally(()=>{
         waitQuery.value = false
-        queryResultType.value = 0
       })
     }
   })
@@ -137,5 +141,8 @@ const queryRules = {
   font-size: 18px;
   font-weight: bold;
   padding: 15px;
+}
+.addr-query-result-font{
+  font-size: 18px;
 }
 </style>
