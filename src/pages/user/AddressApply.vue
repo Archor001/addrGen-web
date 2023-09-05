@@ -16,9 +16,9 @@
         <el-form-item :label="t('label.ISPPrefix')">
           <el-input v-model="applyForm.prefix" :placeholder="t('holder.plsInputStandardISPPrefix')"></el-input>
         </el-form-item>
-        <el-form-item :label="t('label.suffix')">
+        <!-- <el-form-item :label="t('label.suffix')">
           <el-input v-model="applyForm.suffix" :placeholder="t('holder.plsInput64Suffix')"></el-input>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div>
         <el-button type="primary" @click="handleGenerateAddress()" :icon="Send" 

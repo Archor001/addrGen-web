@@ -7,8 +7,8 @@
         <el-form-item width="100%" :label="t('label.IPv6Address')" prop="queryAddress">
           <el-input v-model="queryForm.queryAddress" :placeholder="t('holder.plsInputIPv6Address')"></el-input>
         </el-form-item>
-        <el-form-item width="100%" :label="t('label.ISPPrefix')" prop="prefix">
-          <el-input v-model="queryForm.prefix" :placeholder="t('holder.plsInputStandardISPPrefix')"></el-input>
+        <el-form-item width="100%" :label="t('label.ISPPrefixLength')" prop="prefixLength">
+          <el-input v-model="queryForm.prefixLength" :placeholder="t('holder.plsInputPrefixLength')"></el-input>
         </el-form-item>
       </el-form>
       <div>
@@ -81,7 +81,7 @@ function handleQueryAddress(){
   queryFormRef.value.validate((valid) => {
     if(valid){
       waitQuery.value = true
-      queryAddress(queryForm.value.queryAddress, queryForm.value.prefix).then(response => {
+      queryAddress(queryForm.value.queryAddress, queryForm.value.prefixLength).then(response => {
         ElMessage.success(t('tip.querySuccess'))
         queryResult.value = response.data.info
         queryResultType.value = ResultTypeSuccess
@@ -97,7 +97,7 @@ function handleQueryAddress(){
 
 const queryRules = {
   queryAddress: [{required: true, message: t('holder.plsInputIPv6Address'), trigger: 'blur'}],
-  prefix: [{required: true, message: t('holder.plsInputStandardISPPrefix'), trigger: 'blur'}]
+  prefixLength: [{required: true, message: t('holder.plsInputPrefixLength'), trigger: 'blur'}]
 }
 
 </script>
