@@ -24,6 +24,7 @@
     "loginTimeout": "登录超时",
     "missingNID": "缺少NID，请注册",
     "needLogin": "需要登录",
+    "phoneNumberNotApply": "此手机号暂未申请NID",
     "phoneRegistered": "手机号已注册",
     "queryAddressFail": "地址查询失败",
     "registerFail": "用户注册失败",

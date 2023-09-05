@@ -6,8 +6,8 @@
         <span>{{ t('label.addressApply') }}</span>
       </div>
       <el-form :model="applyForm" label-width="auto" class="addr-generate-form" ref="applyFormRef" :rules="applyRules">
-        <el-form-item label="NID" prop="nid">
-          <el-input v-model="applyForm.nid" :placeholder="t('holder.plsInputNid')"></el-input>
+        <el-form-item :label="t('label.phoneNumber')" prop="phoneNumber">
+          <el-input v-model="applyForm.phoneNumber" :placeholder="t('holder.plsInputPhoneNumber')"></el-input>
         </el-form-item>
         <el-form-item :label="t('label.password')" prop="password">
           <el-input v-model="applyForm.password" :placeholder="t('holder.plsInputPassword')" show-password>
@@ -80,7 +80,7 @@ function handleGenerateAddress(){
 }
 
 const applyRules = {
-  nid: [{required: true, message: t('holder.plsInputNid'), trigger: 'blur'}],
+  phoneNumber: [{required: true, message: t('holder.plsInputPhoneNumber'), trigger: 'blur'}],
   password: [{required: true, message: t('holder.plsInputPassword'), trigger: 'blur'}],
 }
 
