@@ -1,0 +1,1 @@
+System.register(["./index-legacy-321203bb.js"],(function(e,t){"use strict";var s,n,r;return{setters:[e=>{s=e.b,n=e.o,r=e.d}],execute:function(){e("default",{__name:"AddressMng",setup:e=>(s(),(e,t)=>(n(),r("span",null,"123")))})}}}));

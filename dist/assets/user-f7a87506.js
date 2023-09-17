@@ -1,0 +1,1 @@
+import{ao as s}from"./_plugin-vue_export-helper-696b3250.js";const p=1,u=2,a="/api/login",i="/api/user/nid",n="/api/admin/user";function U(e){return s.put(i,e)}function c(e,r){return s.post(a,{username:e,password:r})}function d(e){return s.delete(n,{params:{nid:e}})}function g(e,r,t){return s.get(n,{params:{offset:e,limit:r,content:t}})}export{p as U,u as a,d,g,c as l,U as r};

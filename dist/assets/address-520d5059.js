@@ -1,0 +1,1 @@
+import{ao as e}from"./_plugin-vue_export-helper-696b3250.js";const r="/api/user/address",o=1,n=2;function p(s){return e.post(r,s)}function u(s,a){return e.get(r,{params:{queryAddress:s,prefixLength:a}})}export{o as R,p as a,n as b,u as q};

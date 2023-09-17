@@ -1,0 +1,1 @@
+System.register(["./_plugin-vue_export-helper-legacy-16175a53.js"],(function(e,r){"use strict";var t;return{setters:[e=>{t=e.ao}],execute:function(){e({a:function(e){return t.post(r,e)},q:function(e,s){return t.get(r,{params:{queryAddress:e,prefixLength:s}})}});const r="/api/user/address";e("R",1),e("b",2)}}}));
