@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$http.post("http://10.12.171.50:2233/addressGeneration/creatPortWithRealIPv6Addr", {
+      this.$http.post("http://10.12.190.31:2233/addressGeneration/creatPortWithRealIPv6Addr", {
         /*  this.$http.post("http://10.12.180.45:2233/addressGeneration/getIPv6Addr", { */
         nid: this.formInline.nid,
         password: this.formInline.password
@@ -105,7 +105,7 @@ export default {
       // console.log(ttmp)
     },
     onSubmit2() {
-      this.$http.post("http://10.12.171.50:2233/addressGeneration/query", {
+      this.$http.post("http://10.12.190.31:2233/addressGeneration/query", {
 
         queryAddress: this.formInline2.input
       }).then(res => {

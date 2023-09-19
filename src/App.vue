@@ -7,6 +7,7 @@
           <div id="headr" class="two">
             <router-link :to="{ path: '/' }">地址管理</router-link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <router-link :to="{ path: '/nid' }">NID管理</router-link>
+            <router-link :to="{ path: '/delete'}" style="margin-left: 35px;">删除用户</router-link>
           </div>
         </el-header>
         <el-main>
@@ -20,6 +21,7 @@
 <script>
 import AppNid from './components/AppNid.vue'
 import AppMain from './components/AppMain.vue'
+import DeleteNid from './components/DeleteNid.vue';
 
 export default {
   name: 'App',
