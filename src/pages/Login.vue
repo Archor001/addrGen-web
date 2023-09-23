@@ -23,7 +23,7 @@
             ></el-input>
           </el-form-item>
       </el-form>
-      <el-button type="primary" class="login-button" @click="onSubmit()">{{t('login')}}</el-button>
+      <el-button type="primary" class="login-button" @click="onSubmit()" @keyup.enter="onSubmit()">{{t('login')}}</el-button>
     </div>
   </div>
   </template>
@@ -53,12 +53,11 @@
         // 成功
         login(FormDatas.username, FormDatas.password).then(response => {
           //登录成功
-          store.commit('setIdentity', response.data['data'].identity)
-          store.commit('setUsername', response.data['data'].username)
+          store.commit('setIdentity', 1)
           router.replace({path: '/'})
         }).catch(error => {
-          if (error.data.msg && error.data.msg.length > 0)
-            loginTip.value = error.data.msg
+          if (error.msg && error.msg.length > 0)
+            loginTip.value = error.msg
         })
       } else {
         return false;

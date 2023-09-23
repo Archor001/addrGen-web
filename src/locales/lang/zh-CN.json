@@ -6,7 +6,10 @@
   "button": {
     "addressQuery": "地址查询",
     "delete": "删除",
+    "edit": "",
+    "editISP": "修改ISP前缀",
     "generateAddress": "生成地址",
+    "regenerateAddress": "重新生成地址",
     "register": "注册"
   },
   "cancel": "取消",
@@ -58,6 +61,7 @@
     "addressApply": "地址生成",
     "addressApplyFail": "地址生成失败！",
     "addressApplySuccess": "地址生成成功！",
+    "addressManage": "地址管理",
     "addressQuery": "地址查询",
     "addressQueryFail": "地址查询失败！",
     "addressQuerySuccess": "地址查询成功！",

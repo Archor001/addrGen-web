@@ -9,7 +9,7 @@ const routes = [
         case 1:
           return { path: '/admin' }
         default:
-          return { path: '/user' }
+          return { name: 'Login' }
       }
     }
   },
@@ -24,32 +24,14 @@ const routes = [
     component: () => import('../pages/AdminCenter.vue'),
     children: [{
       path: '',
-      name: 'UserManage',
-      component: () => import('../pages/admin/UserMng.vue')
-    },{
-      path: 'address',
       name: 'AddressManage',
       component: () => import('../pages/admin/AddressMng.vue')
-    }]
-  },
-  {
-    path: '/user',
-    name: 'UserCenter',
-    component: () => import('../pages/UserCenter.vue'),
-    children: [{
-      path: '',
-      name: 'AddressApply',
-      component: () => import('../pages/user/AddressApply.vue')
     },{
       path: 'query',
       name: 'AddressQuery',
-      component: () => import('../pages/user/AddressQuery.vue')
-    },{
-      path: 'nid',
-      name: 'NidApply',
-      component: () => import('../pages/user/NidApply.vue')
+      component: () => import('../pages/admin/AddressQuery.vue')
     }]
-  },
+  }
 ]
 
 const router = createRouter({

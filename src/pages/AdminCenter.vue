@@ -1,8 +1,9 @@
 <template>
   <base-container>
     <template #center>
-      <base-nav-item name="UserManage">{{t('title.userManage')}}</base-nav-item>
-      <!-- <base-nav-item name="AddressManage">{{ t('title.addressManage') }}</base-nav-item> -->
+      <base-nav-item name="AddressManage">{{ t('title.addressManage') }}</base-nav-item>
+      <base-nav-item name="AddressISP">{{ t('label.ISPPrefix') }}</base-nav-item>
+      <base-nav-item name="AddressQuery">{{ t('label.addressQuery') }}</base-nav-item>
     </template>
     <router-view></router-view>
   </base-container>
