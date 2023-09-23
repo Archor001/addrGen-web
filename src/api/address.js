@@ -28,6 +28,11 @@ export function updateISP(isp){
   })
 }
 
+// 获取ISP地址前缀
+export function getISP(){
+  return service.get(ISPURL)
+}
+
 // 重新生成地址
 export function regenerateAddress(isp){
   return service.post(RegenAddressURL, {

@@ -6,7 +6,7 @@
       <div class="addr-manage-toolbar">
         <div style="display:flex; align-items: center;">
           <span>{{ t('label.ISPPrefix') + "：" }}</span>
-          <el-tag style="margin-left: 5px;" type="primary" size="large">{{ ISPPrefix }}</el-tag>
+          <el-tag style="margin-left: 5px;" class="ISP-tag" type="primary" size="large">{{ ISPPrefix }}</el-tag>
           <el-button style="margin-left: 15px;" plain round :icon="EditOne" @click="handleEditISP()">{{ t('button.editISP') }}</el-button>
           <el-button style="margin-left: 15px;" plain round :icon="Refresh" @click="handleRegenAddress()">{{ t('button.regenerateAddress') }}</el-button>
         </div>
@@ -61,7 +61,7 @@
 import { Search, Refresh, EditOne } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
 import { getUser, deleteUser } from '../../api/user';
-import { regenerateAddress } from '../../api/address';
+import { regenerateAddress, getISP } from '../../api/address';
 import { formatStamp } from '../../utils';
 import IspManage from '../../components/address/IspManage.vue';
 import { useI18n } from 'vue-i18n';
@@ -81,8 +81,23 @@ const userList = ref([])
 
 // 初始化地址管理页面
 function initAddressMng(){
-  ISPPrefix.value = "2001:250:4000::/48"
+  flushISP()
   flushAddress()
+}
+
+// 获取ISP
+function flushISP(){
+  const loadingInstance = ElLoaing.service({
+    fullscreen: false,
+    target: '.ISP-tag'
+  })
+  getISP().then(response => {
+    ISPPrefix.value = response.data.isp
+  }).catch(res => {
+    ElMessage.error(res.data.msg)
+  }).finally(() => {
+    loadingInstance.close()
+  })
 }
 
 // 批量获取地址
