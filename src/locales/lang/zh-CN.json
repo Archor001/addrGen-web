@@ -65,6 +65,7 @@
     "addressQuery": "地址查询",
     "addressQueryFail": "地址查询失败！",
     "addressQuerySuccess": "地址查询成功！",
+    "editISP": "修改ISP地址前缀",
     "information": "信息",
     "nidApplyFail": "用户注册失败！",
     "nidApplySuccess": "用户注册成功！已分配NID",
@@ -87,8 +88,10 @@
   "tip": {
     "applySuccess": "生成成功",
     "deleteSuccess": "删除成功",
+    "editSuccess": "修改成功",
     "loginSuccess": "登录成功",
     "querySuccess": "查询成功",
+    "regenSuccess": "重新生成地址成功",
     "registerSuccess": "注册成功"
   },
   "title": {

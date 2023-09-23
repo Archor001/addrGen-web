@@ -1,6 +1,8 @@
 import service from "./basic";
 
-const AddressURL = '/api/user/address'
+const AddressURL = '/api/admin/address'
+const RegenAddressURL = '/api/admin/regen/address'
+const ISPURL = '/api/admin/isp'
 
 export const ResultTypeSuccess = 1
 export const ResultTypeFail = 2
@@ -16,5 +18,19 @@ export function queryAddress(queryAddress, prefixLength){
     params:{
       queryAddress, prefixLength
     }
+  })
+}
+
+// 修改ISP
+export function updateISP(isp){
+  return service.post(ISPURL, {
+    isp
+  })
+}
+
+// 重新生成地址
+export function regenerateAddress(isp){
+  return service.post(RegenAddressURL, {
+    isp
   })
 }

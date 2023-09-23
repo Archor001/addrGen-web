@@ -7,12 +7,12 @@
         <div style="display:flex; align-items: center;">
           <span>{{ t('label.ISPPrefix') + "：" }}</span>
           <el-tag style="margin-left: 5px;" type="primary" size="large">{{ ISPPrefix }}</el-tag>
-          <el-button style="margin-left: 15px;" plain round :icon="EditOne">{{ t('button.editISP') }}</el-button>
-          <el-button style="margin-left: 15px;" plain round :icon="Refresh">{{ t('button.regenerateAddress') }}</el-button>
+          <el-button style="margin-left: 15px;" plain round :icon="EditOne" @click="handleEditISP()">{{ t('button.editISP') }}</el-button>
+          <el-button style="margin-left: 15px;" plain round :icon="Refresh" @click="handleRegenAddress()">{{ t('button.regenerateAddress') }}</el-button>
         </div>
-        <el-input v-model="userFilterContent" @keyup.enter="handleGetUser()" :placeholder="t('holder.userFilter')" style="width: 30%;">
+        <el-input v-model="userFilterContent" @keyup.enter="flushAddress()" :placeholder="t('holder.userFilter')" style="width: 30%;">
           <template #append>
-            <el-button @click="handleGetUser()"><el-icon><Search /></el-icon></el-button>
+            <el-button @click="flushAddress()"><el-icon><Search /></el-icon></el-button>
           </template>
         </el-input>
       </div>
@@ -46,11 +46,14 @@
         </el-table-column>
       </el-table>
       <el-row style="margin-top:32px;" justify="center">
-          <el-pagination v-model:currentPage="currentPage" v-model:page-size="pageSize" hide-on-single-page
-            :page-sizes="[10, 15, 20, 25, 30]" background layout="total, sizes, prev, pager, next, jumper"
-            :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
-        </el-row>
+        <el-pagination v-model:currentPage="currentPage" v-model:page-size="pageSize" hide-on-single-page
+          :page-sizes="[10, 15, 20, 25, 30]" background layout="total, sizes, prev, pager, next, jumper"
+          :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+      </el-row>
     </div>
+    <el-dialog :modelValue="editISPVisible" @update:modelValue="updateVisible" :title="t('label.editISP')" draggable width="25%">
+      <isp-manage :isp="ISPPrefix"></isp-manage>
+    </el-dialog>
   </div>
 </template>
 
@@ -58,7 +61,9 @@
 import { Search, Refresh, EditOne } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
 import { getUser, deleteUser } from '../../api/user';
+import { regenerateAddress } from '../../api/address';
 import { formatStamp } from '../../utils';
+import IspManage from '../../components/address/IspManage.vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
 
@@ -77,13 +82,14 @@ const userList = ref([])
 // 初始化地址管理页面
 function initAddressMng(){
   ISPPrefix.value = "2001:250:4000::/48"
-  handleGetUser()
+  flushAddress()
 }
 
-function handleGetUser(){
+// 批量获取地址
+function flushAddress(){
   const loadingInstance = ElLoading.service({
     fullscreen: false,
-    target: '.user-list-table'
+    target: '.addr-list-table'
   })
   getUser((currentPage.value - 1) * pageSize.value, pageSize.value, userFilterContent.value).then(response => {
     userList.value = response.data.users
@@ -93,6 +99,54 @@ function handleGetUser(){
   }).finally(()=>{
     loadingInstance.close()
   })
+}
+
+// 修改ISP地址前缀
+const editISPVisible = ref(false)
+function handleEditISP(){
+  editISPVisible.value = true
+}
+
+// 重新生成地址
+function handleRegenAddress(){
+  const loadingInstance = ElLoading.service({
+    fullscreen: false,
+    target: '.addr-list-table'
+  })
+  regenerateAddress(ISPPrefix.value).then(response => {
+    ElMessage.success(t('tip.regenSuccess'))
+    flushAddress()
+  }).catch(res => {
+    ElMessage.error(res.data.msg)
+  }).finally(() => {
+    loadingInstance.close()
+  })
+}
+
+// 删除用户
+function handleDeleteUser(user){
+  ElMessageBox.confirm(t('ask.deleteUser'),'Tip',{
+    confirmButtonText: t('confirm'),
+    cancelButtonText: t('cancel')
+  }).then(() => {
+    deleteUser(user.nid).then(response => {
+      ElMessage.success(t('tip.deleteSuccess'))
+      flushAddress()
+    }).catch(res => {
+      ElMessage.error(res.data.msg)
+    })
+  })
+}
+
+// 分页
+function handleCurrentChange(val){
+  currentPage.value = val
+  flushAddress()
+}
+
+function handleSizeChange(val){
+  pageSize.value = val
+  flushAddress()
 }
 
 </script>
