@@ -13,10 +13,10 @@ export function applyAddress(address){
 }
 
 // 地址查询
-export function queryAddress(queryAddress, prefixLength){
+export function queryAddress(queryAddress){
   return service.get(AddressURL, {
     params:{
-      queryAddress, prefixLength
+      queryAddress
     }
   })
 }
