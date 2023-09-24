@@ -19,8 +19,8 @@ service.interceptors.request.use(config => {
 });
 
 // 错误码
-export const CodeUnknown = 10000
-export const CodeNeedLogin = 10001
+export const CodeUnknown = 10000            // 未知错误
+export const CodeNeedLogin = 10001          // 需要登录
 export const CodeRegisterFail = 10002       // 用户注册失败
 export const CodeGenerateFail = 10003       // 地址生成失败
 export const CodeQueryFail = 10004          // 地址查询失败
@@ -37,6 +37,7 @@ export const CodeUserNotExist = 10014       // 用户不存在
 export const CodePhoneRegistered = 10015    // 手机号已注册
 export const CodeAddressNotExist = 10016    // 地址不存在
 export const CodePhoneNumberNotApply = 10017      // 此手机号暂未申请NID
+export const CodeISPNotApplied = 10018      // ISP未申请
 
 function getMsgByCode(code) {
   switch(code) {
@@ -89,6 +90,8 @@ function getMsgByCode(code) {
       return i18n.global.t('error.addressNotExist')
     case CodePhoneNumberNotApply:
       return i18n.global.t('error.phoneNumberNotApply')
+    case CodeISPNotApplied:
+      return i18n.global.t('error.ispNotApplied')
     default:
       return i18n.global.t('error.unknown')
   }

@@ -24,6 +24,7 @@
     "getKeyFail": "获取密钥出错",
     "getUserFail": "获取用户失败",
     "invalidPhone": "手机号码不合规",
+    "ispNotApplied": "未创建ISP，请前往平台界面创建ISP",
     "loginTimeout": "登录超时",
     "missingNID": "缺少NID，请注册",
     "needLogin": "需要登录",
