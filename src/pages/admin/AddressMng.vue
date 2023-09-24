@@ -18,6 +18,7 @@
             </template>
           </el-popover>
         </div>
+        <el-button type="primary" text @click="flushAddress()" :icon="Refresh"></el-button>
         <el-input v-model="userFilterContent" @keyup.enter="flushAddress()" :placeholder="t('holder.userFilter')" style="width: 30%;">
           <template #append>
             <el-button @click="flushAddress()"><el-icon><Search /></el-icon></el-button>
@@ -60,7 +61,7 @@
       </el-row>
     </div>
     <el-dialog :modelValue="editISPVisible" @update:modelValue="updateVisible" :title="!ISPPrefix? t('label.createISP') : t('label.editISP')" draggable width="25%">
-      <isp-manage :isp="ISPPrefix" :length="ISPLength" @success="confirmSubmit()"></isp-manage>
+      <isp-manage :isp="ISPPrefix" :length="ISPLength" :edit="!!ISPPrefix && ISPPrefix.length > 0" @success="confirmSubmit()"></isp-manage>
     </el-dialog>
   </div>
 </template>
@@ -150,6 +151,10 @@ function confirmSubmit(){
 
 // 重新生成地址
 function handleRegenAddress(){
+  ElMessageBox.confirm(t('warning.changeISPTakesTime'),t('title.warning'),{
+    confirmButtonText: t('confirm'),
+    cancelButtonText: t('cancel')
+  })
   const loadingInstance = ElLoading.service({
     fullscreen: false,
     target: '.addr-list-table'

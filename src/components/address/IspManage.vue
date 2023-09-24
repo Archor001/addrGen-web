@@ -20,9 +20,13 @@ const { t } = useI18n()
 const props = defineProps({
   isp: String,
   length: Number,
+  edit: {
+    type: Boolean,
+    default: false
+  }
 })
 
-const { isp, length } = toRefs(props)
+const { isp, length, edit } = toRefs(props)
 
 onMounted(initISP)
 watch(isp, initISP)
@@ -41,19 +45,40 @@ function initISP(){
 // 提交ISP地址前缀
 const waitConfirm = ref(false)
 function confirmISPPrefix(){
-  ispFormRef.value.validate((valid) => {
-    if(valid){
-      waitConfirm.value = true
-      updateISP(ispForm.value.isp).then(response => {
-        ElMessage.success(t('tip.editSuccess'))
-        emit("success")
-      }).catch(res => {
-        ElMessage.error(res.data.msg)
-      }).finally(() => {
-        waitConfirm.value = false
+  if(edit.value){
+    ElMessageBox.confirm(t('ask.sureToChangeISP'), t('title.warning'), {
+      confirmButtonText: t('confirm'),
+      cancelButtonText: t('cancel'),
+    }).then(()=>{
+      ispFormRef.value.validate((valid) => {
+        if(valid){
+          waitConfirm.value = true
+          updateISP(ispForm.value.isp).then(response => {
+            ElMessage.success(t('tip.editSuccess'))
+            emit("success")
+          }).catch(res => {
+            ElMessage.error(res.data.msg)
+          }).finally(() => {
+            waitConfirm.value = false
+          })
+        }
       })
-    }
-  })
+    })
+  } else {
+    ispFormRef.value.validate((valid) => {
+      if(valid){
+        waitConfirm.value = true
+        updateISP(ispForm.value.isp).then(response => {
+          ElMessage.success(t('tip.editSuccess'))
+          emit("success")
+        }).catch(res => {
+          ElMessage.error(res.data.msg)
+        }).finally(() => {
+          waitConfirm.value = false
+        })
+      }
+    })
+  }
 }
 
 const ispRules = {

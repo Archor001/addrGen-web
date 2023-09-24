@@ -1,6 +1,7 @@
 {
   "ask": {
-    "deleteUser": "确定删除此用户？"
+    "deleteUser": "确定删除此用户？",
+    "sureToChangeISP": "确定要修改ISP地址前缀，此操作需要重新生成地址，可能耗时较长"
   },
   "back": "返回",
   "button": {
@@ -33,6 +34,7 @@
     "phoneNumberNotApply": "此手机号暂未申请NID",
     "phoneRegistered": "手机号已注册",
     "queryAddressFail": "地址查询失败",
+    "regenAddressFailed": "重新生成地址失败",
     "registerFail": "用户注册失败",
     "server": "服务错误",
     "unknown": "未知错误",
@@ -105,11 +107,15 @@
     "applyAddress": "地址生成",
     "applyNID": "账号注册",
     "switchToAdmin": "切换至管理员",
-    "userManage": "用户管理"
+    "userManage": "用户管理",
+    "warning": "警告"
   },
   "user": {
     "logout": "注销",
     "name": "用户",
     "password": "密码"
+  },
+  "warning": {
+    "changeISPTakesTime": "重新生成地址可能需要消耗较长时间"
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="addr-isp-container">
     <span class="addr-isp-header">{{ t('label.ISPPrefix') }}</span>
-    <isp-manage :isp="ISPPrefix" :length="ISPLength" style="width: 50%"></isp-manage>
+    <isp-manage :isp="ISPPrefix" :length="ISPLength" :edit="!!ISPPrefix && ISPPrefix.length > 0" style="width: 50%"></isp-manage>
   </div>
 </template>
 
