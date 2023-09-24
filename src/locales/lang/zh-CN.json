@@ -5,6 +5,7 @@
   "back": "返回",
   "button": {
     "addressQuery": "地址查询",
+    "createISP": "创建ISP地址前缀",
     "delete": "删除",
     "edit": "",
     "editISP": "修改ISP前缀",
@@ -24,6 +25,7 @@
     "getKeyFail": "获取密钥出错",
     "getUserFail": "获取用户失败",
     "invalidPhone": "手机号码不合规",
+    "ispFormatInvalid": "ISP地址前缀格式不合法",
     "ispNotApplied": "未创建ISP，请前往平台界面创建ISP",
     "loginTimeout": "登录超时",
     "missingNID": "缺少NID，请注册",
@@ -66,6 +68,7 @@
     "addressQuery": "地址查询",
     "addressQueryFail": "地址查询失败！",
     "addressQuerySuccess": "地址查询成功！",
+    "createISP": "创建ISP地址前缀",
     "editISP": "修改ISP地址前缀",
     "information": "信息",
     "nidApplyFail": "用户注册失败！",
@@ -91,6 +94,8 @@
     "deleteSuccess": "删除成功",
     "editSuccess": "修改成功",
     "loginSuccess": "登录成功",
+    "needISPToGenerateAddress": "需要先创建ISP才能进行地址生成和溯源等操作",
+    "needISPToQueryAddress": "需要先创建ISP地址前缀才能进行地址溯源(查询)",
     "querySuccess": "查询成功",
     "regenSuccess": "重新生成地址成功",
     "registerSuccess": "注册成功"

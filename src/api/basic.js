@@ -38,6 +38,7 @@ export const CodePhoneRegistered = 10015    // 手机号已注册
 export const CodeAddressNotExist = 10016    // 地址不存在
 export const CodePhoneNumberNotApply = 10017      // 此手机号暂未申请NID
 export const CodeISPNotApplied = 10018      // ISP未申请
+export const CodeISPFormatInvalid = 10019   // ISP地址格式不合法
 
 function getMsgByCode(code) {
   switch(code) {
@@ -92,6 +93,8 @@ function getMsgByCode(code) {
       return i18n.global.t('error.phoneNumberNotApply')
     case CodeISPNotApplied:
       return i18n.global.t('error.ispNotApplied')
+    case CodeISPFormatInvalid:
+      return i18n.global.t('error.ispFormatInvalid')
     default:
       return i18n.global.t('error.unknown')
   }

@@ -18,13 +18,16 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
 
 const props = defineProps({
-  isp: String
+  isp: String,
+  length: Number,
 })
 
-const { isp } = toRefs(props)
+const { isp, length } = toRefs(props)
 
 onMounted(initISP)
 watch(isp, initISP)
+
+const emit = defineEmits(["success"])
 
 const ispForm = ref({})
 const ispFormRef = ref(null)
@@ -32,7 +35,7 @@ const ispFormRef = ref(null)
 function initISP(){
   if(!isp.value || isp.value.length <= 0)
     return;
-  ispForm.value.isp = isp.value
+  ispForm.value.isp = isp.value + "::/" + length.value
 }
 
 // 提交ISP地址前缀
@@ -41,8 +44,9 @@ function confirmISPPrefix(){
   ispFormRef.value.validate((valid) => {
     if(valid){
       waitConfirm.value = true
-      updateISP(ispForm.value).then(response => {
+      updateISP(ispForm.value.isp).then(response => {
         ElMessage.success(t('tip.editSuccess'))
+        emit("success")
       }).catch(res => {
         ElMessage.error(res.data.msg)
       }).finally(() => {

@@ -62,8 +62,8 @@
 
 <script setup>
 import { Phone, Time, User } from '@icon-park/vue-next';
-import { ref } from 'vue';
-import { queryAddress, ResultTypeSuccess, ResultTypeFail } from '../../api/address'
+import { ref, onMounted } from 'vue';
+import { queryAddress, ResultTypeSuccess, ResultTypeFail, getISP } from '../../api/address'
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
@@ -71,10 +71,34 @@ const queryForm = ref({})
 const queryFormRef = ref(null)
 const queryResult = ref({})
 
+onMounted(flushISP)
+
+const ISPPrefix = ref('')
+const ISPLength = ref(0)
+// 获取ISP地址前缀
+function flushISP(){
+  const loadingInstance = ElLoading.service({
+    fullscreen: false,
+    target: '.addr-isp-container'
+  })
+  getISP().then(response => {
+    ISPPrefix.value = response.data.isp
+    ISPLength.value = response.data.length
+  }).catch(res => {
+    ElMessage.error(res.data.msg)
+  }).finally(() => {
+    loadingInstance.close()
+  })
+}
+
 // 地址查询
 const waitQuery = ref(false)
 const queryResultType = ref(0)
 function handleQueryAddress(){
+  if(!ISPPrefix.value || ISPPrefix.value.length <= 0){
+    ElMessage.warning(t('tip.needISPToQueryAddress'))
+    return;
+  }
   queryFormRef.value.validate((valid) => {
     if(valid){
       waitQuery.value = true

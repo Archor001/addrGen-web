@@ -1,14 +1,37 @@
 <template>
   <div class="addr-isp-container">
     <span class="addr-isp-header">{{ t('label.ISPPrefix') }}</span>
-    <isp-manage style="width: 50%"></isp-manage>
+    <isp-manage :isp="ISPPrefix" :length="ISPLength" style="width: 50%"></isp-manage>
   </div>
 </template>
 
 <script setup>
 import IspManage from '../../components/address/IspManage.vue'
+import { onMounted, ref } from 'vue';
+import { getISP } from '../../api/address'
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
+
+onMounted(flushISP)
+
+const ISPPrefix = ref('')
+const ISPLength = ref(0)
+
+function flushISP(){
+  const loadingInstance = ElLoading.service({
+    fullscreen: false,
+    target: '.addr-isp-container'
+  })
+  getISP().then(response => {
+    ISPPrefix.value = response.data.isp
+    ISPLength.value = response.data.length
+  }).catch(res => {
+    ElMessage.error(res.data.msg)
+  }).finally(() => {
+    loadingInstance.close()
+  })
+}
+
 </script>
 
 <style scoped>

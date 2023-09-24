@@ -4,11 +4,19 @@
     <div class="addr-manage-body">
       <!-- 地址操作 -->
       <div class="addr-manage-toolbar">
-        <div style="display:flex; align-items: center;">
+        <div style="display:flex; align-items: center;" v-if="!!ISPPrefix && ISPPrefix.length > 0">
           <span>{{ t('label.ISPPrefix') + "：" }}</span>
-          <el-tag style="margin-left: 5px;" class="ISP-tag" type="primary" size="large">{{ ISPPrefix }}</el-tag>
+          <el-tag style="margin-left: 5px;" class="ISP-tag" type="primary" size="large">{{ ISPPrefix + "::/" + ISPLength}}</el-tag>
           <el-button style="margin-left: 15px;" plain round :icon="EditOne" @click="handleEditISP()">{{ t('button.editISP') }}</el-button>
           <el-button style="margin-left: 15px;" plain round :icon="Refresh" @click="handleRegenAddress()">{{ t('button.regenerateAddress') }}</el-button>
+        </div>
+        <div style="display:flex; align-items: center;" v-else>
+          <el-button round :icon="EditOne" @click="handleEditISP()" type="success">{{ t('button.createISP') }}</el-button>
+          <el-popover placement="right" width="400" trigger="hover" :content="t('tip.needISPToGenerateAddress')">
+            <template #reference>
+              <el-button link :icon="InfoFilled" style="margin-left: 8px;"></el-button>
+            </template>
+          </el-popover>
         </div>
         <el-input v-model="userFilterContent" @keyup.enter="flushAddress()" :placeholder="t('holder.userFilter')" style="width: 30%;">
           <template #append>
@@ -51,13 +59,14 @@
           :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </el-row>
     </div>
-    <el-dialog :modelValue="editISPVisible" @update:modelValue="updateVisible" :title="t('label.editISP')" draggable width="25%">
-      <isp-manage :isp="ISPPrefix"></isp-manage>
+    <el-dialog :modelValue="editISPVisible" @update:modelValue="updateVisible" :title="!ISPPrefix? t('label.createISP') : t('label.editISP')" draggable width="25%">
+      <isp-manage :isp="ISPPrefix" :length="ISPLength" @success="confirmSubmit()"></isp-manage>
     </el-dialog>
   </div>
 </template>
 
 <script setup>
+import { InfoFilled } from '@element-plus/icons-vue'
 import { Search, Refresh, EditOne } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
 import { getUser, deleteUser } from '../../api/user';
@@ -73,6 +82,7 @@ onMounted(() => {
 
 const userFilterContent = ref('')
 const ISPPrefix = ref('')
+const ISPLength = ref(0)
 
 const currentPage = ref(1)
 const pageSize = ref(10)
@@ -81,22 +91,32 @@ const userList = ref([])
 
 // 初始化地址管理页面
 function initAddressMng(){
-  flushISP()
-  flushAddress()
+  flushISPandAddress()
 }
 
 // 获取ISP
-function flushISP(){
-  const loadingInstance = ElLoaing.service({
+function flushISPandAddress(){
+  const ispLoadingInstance = ElLoading.service({
     fullscreen: false,
     target: '.ISP-tag'
   })
+  const addrLoadingInstance = ElLoading.service({
+    fullscreen: false,
+    target: '.addr-list-table'
+  })
   getISP().then(response => {
     ISPPrefix.value = response.data.isp
+    ISPLength.value = response.data.length
+    return getUser((currentPage.value - 1) * pageSize.value, pageSize.value, userFilterContent.value)
+  }).then(resp => {
+    ispLoadingInstance.close()
+    userList.value = resp.data.users
+    total.value = resp.data.count
   }).catch(res => {
+    console.log(res)
     ElMessage.error(res.data.msg)
   }).finally(() => {
-    loadingInstance.close()
+    addrLoadingInstance.close()
   })
 }
 
@@ -122,13 +142,19 @@ function handleEditISP(){
   editISPVisible.value = true
 }
 
+// 修改ISP地址前缀成功
+function confirmSubmit(){
+  editISPVisible.value = false
+  initAddressMng()
+}
+
 // 重新生成地址
 function handleRegenAddress(){
   const loadingInstance = ElLoading.service({
     fullscreen: false,
     target: '.addr-list-table'
   })
-  regenerateAddress(ISPPrefix.value).then(response => {
+  regenerateAddress(ISPPrefix.value.isp).then(response => {
     ElMessage.success(t('tip.regenSuccess'))
     flushAddress()
   }).catch(res => {
