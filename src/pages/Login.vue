@@ -71,6 +71,7 @@ function onSubmit() {
   position: relative;
   width: 100% !important;
   height: 100% !important;
+  background-image: url('../../public/Login.jpg');
   background-size: 100% 100%;
   margin: 0;
   padding: 0;
@@ -82,7 +83,7 @@ function onSubmit() {
   width: 400px;
   padding: 35px;
   border-radius: 5px;
-  box-shadow: 0 0 25px #343a40;
+  box-shadow: 0 0 15px #868e96;
   background-position: center top;background-size: cover;
   z-index: 1;
   overflow: hidden;
