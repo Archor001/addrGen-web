@@ -60,7 +60,7 @@
           :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </el-row>
     </div>
-    <el-dialog :modelValue="editISPVisible" @update:modelValue="updateVisible" :title="!ISPPrefix? t('label.createISP') : t('label.editISP')" draggable width="25%">
+    <el-dialog v-model="editISPVisible" :title="!ISPPrefix? t('label.createISP') : t('label.editISP')" draggable width="25%">
       <isp-manage :isp="ISPPrefix" :length="ISPLength" :edit="!!ISPPrefix && ISPPrefix.length > 0" @success="confirmSubmit()"></isp-manage>
     </el-dialog>
   </div>
