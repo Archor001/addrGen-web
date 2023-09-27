@@ -4,13 +4,7 @@ export const UserIdentityAdmin = 1
 export const UserIdentityUser = 2
 
 const LoginURL = '/api/login'
-const UserApplyURL = '/api/user/nid'
 const UserManageURL = '/api/admin/user'
-
-// 用户注册NID
-export function registerNID(user){
-  return service.put(UserApplyURL, user)
-}
 
 export function login(username, password) {
   return service.post(LoginURL, {
