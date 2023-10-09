@@ -14,7 +14,7 @@
     </el-row>
 
     <el-row justify="center" style="margin-top: 32px">
-      <el-table :data="userList" class="user-list-table" style="width: 100%">
+      <el-table :data="userList" class="user-list-table" style="width: 100%" table-layout="auto">
         <el-table-column align="center" :label="t('label.username')" prop="username" width="150">
         </el-table-column>
         <el-table-column align="center" :label="t('label.name')" prop="name" width="150">
@@ -65,7 +65,7 @@
       </user-register>
     </el-dialog>
 
-    <edit-user-dialog v-model="editUserVisible" :user="editUser" @success="confirmEdit()"></edit-user-dialog>
+    <edit-user-dialog v-model="editUserVisible" :user="user" @success="confirmEdit()"></edit-user-dialog>
 
   </div>
 </template>
@@ -118,10 +118,10 @@ function handleGetUser(){
 
 // 修改用户
 const editUserVisible = ref(false)
-const editUser = ref({})
+const user = ref({})
 function handleEditUser(user){
   editUserVisible.value = true
-  editUser.value = user
+  user.value = user
 }
 
 function confirmEdit(){

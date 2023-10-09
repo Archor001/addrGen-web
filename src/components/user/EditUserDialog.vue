@@ -10,16 +10,16 @@
       <el-form-item :label="t('label.name')" prop="name">
         <el-input v-model="userForm.name"></el-input>
       </el-form-item>
-      <el-form-item :label="t('label.NID')" prop="password">
+      <el-form-item :label="t('label.password')" prop="password">
         <el-input v-model="userForm.password"></el-input>
       </el-form-item>
-      <el-form-item :label="t('label.name')" prop="phoneNumber">
+      <el-form-item :label="t('label.phoneNumber')" prop="phoneNumber">
         <el-input v-model="userForm.phoneNumber"></el-input>
       </el-form-item>
-      <el-form-item :label="t('label.name')" prop="emailAddress">
+      <el-form-item :label="t('label.emailAddress')" prop="emailAddress">
         <el-input v-model="userForm.emailAddress"></el-input>
       </el-form-item>
-      <el-form-item :label="t('label.name')" prop="role">
+      <el-form-item :label="t('label.role')" prop="role">
         <el-select v-model="userForm.role">
           <el-option :label="t('label.systemManager')" :value="1"></el-option>
           <el-option :label="t('label.VDCManager')" :value="2"></el-option>
@@ -37,7 +37,8 @@
 </template>
 
 <script setup>
-import { toRefs, ref, onMounted } from 'vue';
+import { toRefs, ref, onMounted, watch } from 'vue';
+import md5 from 'js-md5';
 import { editUser } from '../../api/user'
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
@@ -66,6 +67,10 @@ onMounted(() => {
   userForm.value = JSON.parse(JSON.stringify(user.value))
 })
 
+watch(user, () => {
+  userForm.value = JSON.parse(JSON.stringify(user.value))
+})
+
 const emit = defineEmits(["update:modelValue", "success"]);
 
 function updateVisible(val){
@@ -78,6 +83,7 @@ function confirmUser(){
   editUserRef.value.validate(valid => {
     if(valid){
       waitConfirm.value = true
+      userForm.value.password = md5(userForm.value.password)
       editUser(userForm.value).then(response => {
         ElMessage.success(t('tip.editSuccess'))
         emit('success')
@@ -94,7 +100,7 @@ const editRules = {
   name: [{required: true, message: t('holder.plsInputName'), trigger: 'blur'}],
   password: [{required: true, message: t('holder.plsInputPassword'), trigger: 'blur'}],
   emailAddress: [{required: true, message: t('holder.plsInputEmailAddress'), trigger: 'blur'}],
-  password: [{required: true, message: t('holder.plsInputPassword'), trigger: 'blur'}],
+  phoneNumber: [{required: true, message: t('holder.plsInputPhoneNumber'), trigger: 'blur'}],
   role: [{required: true, message: t('holder.plsInputRole'), trigger: 'blur'}],
   nid: [{required: true, message: t('holder.plsInputNid'), trigger: 'blur'}],
 }

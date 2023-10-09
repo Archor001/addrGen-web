@@ -36,6 +36,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import md5 from 'js-md5';
 import { useI18n } from 'vue-i18n';
 import { registerNID } from '../../api/user'
 const { t } = useI18n()
@@ -50,6 +51,7 @@ function handleRegistry(){
   nidFormRef.value.validate((valid) => {
     if(valid){
       waitApply.value = true
+      nidForm.value.password = md5(nidForm.value.password)
       registerNID(nidForm.value).then(response => {
         emit('register', response.data.nid)
         ElMessage.success(t('tip.registerSuccess'))
