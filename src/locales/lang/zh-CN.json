@@ -1,26 +1,41 @@
 {
   "ask": {
-    "deleteUser": "确定删除此用户？"
+    "deleteAddress": "确定删除此地址？",
+    "deleteUser": "确定删除此用户？该操作会同时清除用户对应的地址"
   },
   "back": "返回",
   "button": {
     "addressQuery": "地址查询",
     "delete": "删除",
+    "deleteAddress": "删除地址",
+    "deleteUser": "删除用户",
+    "edit": "修改",
     "generateAddress": "生成地址",
-    "register": "注册"
+    "register": "注册",
+    "traceQuery": "地址溯源"
   },
   "cancel": "取消",
   "confirm": "确认",
   "error": {
+    "CodeFrequentAddress": "请勿频繁生成地址",
+    "CodeNIDNotExist": "NID不存在",
+    "NIDApplied": "此NID已生成地址",
+    "NIDNotExist": "NID不存在",
     "addressAlreadyApplied": "地址已生成，请勿重复生成",
     "addressNotExist": "查询地址不存在",
     "decryptFail": "解密失败",
+    "deleteAddressFail": "地址删除失败",
     "deleteUserFail": "删除用户失败",
+    "editUserFail": "修改用户失败",
     "encryptFail": "加密失败",
+    "flushUserFail": "批量获取用户失败",
+    "frequentAddress": "请勿频繁生成地址",
     "generateAddressFail": "地址生成失败",
     "getKeyFail": "获取密钥出错",
     "getUserFail": "获取用户失败",
-    "invalidPhone": "手机号码不合规",
+    "invalidEmail": "无效邮箱",
+    "invalidPhone": "无效手机号",
+    "invalidRole": "无效角色",
     "loginTimeout": "登录超时",
     "missingNID": "缺少NID，请注册",
     "needLogin": "需要登录",
@@ -29,6 +44,7 @@
     "queryAddressFail": "地址查询失败",
     "registerFail": "用户注册失败",
     "server": "服务错误",
+    "traceAddressFail": "地址溯源失败",
     "unknown": "未知错误",
     "userNotExist": "用户不存在",
     "wrongPasswd": "密码错误"
@@ -36,12 +52,17 @@
   "holder": {
     "password": "请输入密码",
     "plsInput64Suffix": "请输入64位地址后缀(选填)",
-    "plsInputIPv6Address": "请输入IPv6地址前64位",
+    "plsInputAddress": "请输入地址",
+    "plsInputEmailAddress": "请输入邮箱地址",
+    "plsInputIPv6Address": "请输入IPv6地址",
     "plsInputISPPrefix": "请输入ISP地址前缀",
+    "plsInputNID": "请输入NID",
+    "plsInputName": "请输入姓名",
     "plsInputNid": "请输入NID",
     "plsInputPassword": "请输入密码",
     "plsInputPhoneNumber": "请输入手机号码",
     "plsInputPrefixLength": "请输入ISP前缀长度(单位: 字节)",
+    "plsInputRole": "请选择角色",
     "plsInputStandardISPPrefix": "请输入标准格式的ISP地址前缀(选填，例如2001:0250)",
     "plsInputUserID": "请输入学号/工号",
     "plsInputUsername": "请输入用户名",
@@ -50,7 +71,7 @@
   },
   "label": {
     "ID": "学号/工号",
-    "IPv6Address": "IPv6地址前64位",
+    "IPv6Address": "IPv6地址",
     "ISPPrefix": "ISP地址前缀",
     "ISPPrefixLength": "ISP前缀长度(单位: 字节)",
     "NID": "NID",
@@ -62,6 +83,10 @@
     "addressQuery": "地址查询",
     "addressQueryFail": "地址查询失败！",
     "addressQuerySuccess": "地址查询成功！",
+    "addressTrace": "地址溯源",
+    "addressTraceFail": "地址溯源失败！",
+    "addressTraceSuccess": "地址溯源成功！",
+    "editUser": "修改用户",
     "emailAddress": "邮箱地址",
     "information": "信息",
     "name": "姓名",
@@ -91,9 +116,11 @@
   "tip": {
     "applySuccess": "生成成功",
     "deleteSuccess": "删除成功",
+    "editSuccess": "修改成功",
     "loginSuccess": "登录成功",
     "querySuccess": "查询成功",
-    "registerSuccess": "注册成功"
+    "registerSuccess": "注册成功",
+    "traceSuccess": "溯源成功"
   },
   "title": {
     "addressApply": "地址生成",

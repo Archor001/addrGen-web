@@ -26,3 +26,20 @@ export function formatGoTime(time) {
     return time
   }
 }
+
+export function formatRole(role){
+  switch(role){
+    case 1:
+      return t('label.systemManager');
+    case 2:
+      return t('label.VDCManager');
+    case 3:
+      return t('label.projectManager');
+    case 4:
+      return t('label.normalUser');
+    case 5:
+      return t('label.otherUser');
+    default:
+      return t('label.otherUser');
+  }
+}

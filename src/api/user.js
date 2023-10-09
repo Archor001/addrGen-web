@@ -3,8 +3,8 @@ import service from "./basic";
 export const UserIdentityAdmin = 1
 export const UserIdentityUser = 2
 
-const LoginURL = '/api/login'
-const UserURL = '/api/admin/user'
+const LoginURL = '/addrgeneration/login'
+const UserURL = '/addrgeneration/user'
 
 // 用户注册NID
 export function registerNID(user){
@@ -21,19 +21,20 @@ export function login(username, password) {
 // 修改用户
 export function editUser(user) {
   return service.post(UserURL, {
-    ID: user.id,
-    Username: user.username,
-    Nickname: user.nickname,
-    Password: user.password,
-    Identity: user.identity
+    nid: user.nid,
+    name: user.name,
+    password: user.password,
+    phoneNumber: user.phoneNumber,
+    role: user.role,
+    emailAddress: user.emailAddress
   })
 }
 
 // 删除用户
-export function deleteUser(nid) {
+export function deleteUser(userContent) {
   return service.delete(UserURL, {
     params: {
-      nid
+      userContent
     }
   })
 }

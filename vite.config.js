@@ -39,7 +39,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': {
+      '/addrgeneration': {
         target: 'http://127.0.0.1:2233',
         secure: false,
         changeOrigin: true,

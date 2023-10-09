@@ -2,8 +2,8 @@
   <div class="nid-apply">
     <span class="nid-apply-header">{{ t('button.register') + t('label.user') }}</span>
     <el-form :model="nidForm" label-width="auto" class="nid-apply-form" ref="nidFormRef" :rules="applyRules">
-      <el-form-item :label="t('label.userID')" prop="userID">
-        <el-input v-model="nidForm.userID" :placeholder="t('holder.plsInputUserID')"></el-input>
+      <el-form-item :label="t('label.username')" prop="username">
+        <el-input v-model="nidForm.username" :placeholder="t('holder.plsInputUsername')"></el-input>
       </el-form-item>
       <el-form-item :label="t('label.password')" prop="password">
         <el-input v-model="nidForm.password" type="password" :show-password="true" :placeholder="t('holder.plsInputPassword')"></el-input>
@@ -11,8 +11,20 @@
       <el-form-item :label="t('label.phoneNumber')" prop="phoneNumber">
         <el-input v-model="nidForm.phoneNumber" :placeholder="t('holder.plsInputPhoneNumber')"></el-input>
       </el-form-item>
-      <el-form-item :label="t('label.username')" prop="username">
-        <el-input v-model="nidForm.username" :placeholder="t('holder.plsInputUsername')"></el-input>
+      <el-form-item :label="t('label.name')" prop="name">
+        <el-input v-model="nidForm.name" :placeholder="t('holder.plsInputName')"></el-input>
+      </el-form-item>
+      <el-form-item :label="t('label.role')" prop="role">
+        <el-select v-model="nidForm.role">
+          <el-option :label="t('label.systemManager')" :value="1"></el-option>
+          <el-option :label="t('label.VDCManager')" :value="2"></el-option>
+          <el-option :label="t('label.projectManager')" :value="3"></el-option>
+          <el-option :label="t('label.normalUser')" :value="4"></el-option>
+          <el-option :label="t('label.otherUser')" :value="5"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="t('label.emailAddress')" prop="emailAddress">
+        <el-input v-model="nidForm.emailAddress" :placeholder="t('holder.plsInputEmailAddress')"></el-input>
       </el-form-item>
     </el-form>
     <div style="display: flex; align-items:center; margin: 5px 0 15px;">
@@ -39,7 +51,7 @@ function handleRegistry(){
     if(valid){
       waitApply.value = true
       registerNID(nidForm.value).then(response => {
-        emit('register', response.data.user)
+        emit('register', response.data.nid)
         ElMessage.success(t('tip.registerSuccess'))
       }).catch(res => {
         ElMessage.error(res.data.msg)
@@ -51,10 +63,12 @@ function handleRegistry(){
 }
 
 const applyRules = {
-  userID: [{required: true, message: t('holder.plsInputUserID'), trigger: 'change'}],
+  name: [{required: true, message: t('holder.plsInputName'), trigger: 'change'}],
   password: [{required: true, message: t('holder.plsInputPassword'), trigger: 'change'}],
   phoneNumber: [{required: true, message: t('holder.plsInputPhoneNumber'), trigger: 'change'}],
   username: [{required: true, message: t('holder.plsInputUsername'), trigger: 'change'}],
+  emailAddress: [{required: true, message: t('holder.plsInputEmailAddress'), trigger: 'change'}],
+  role: [{required: true, message: t('holder.plsInputRole'), trigger: 'change'}],
 }
 
 </script>

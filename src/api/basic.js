@@ -20,23 +20,24 @@ service.interceptors.request.use(config => {
 
 // 错误码
 export const CodeUnknown = 10000
-export const CodeNeedLogin = 10001
-export const CodeRegisterFail = 10002       // 用户注册失败
-export const CodeGenerateFail = 10003       // 地址生成失败
-export const CodeQueryFail = 10004          // 地址查询失败
-export const CodeWrongPasswd = 10005        // 密码错误
-export const CodeNeedNID = 10006            // 缺少NID，需要注册
-export const CodeGetKeyFail = 10007         // 获取密钥出错
-export const CodeDecryptFail = 10008        // 解密出错
-export const CodeEncryptFail = 10009        // 加密出错
-export const CodeGetUserFail = 10010        // 获取用户失败
-export const CodeAddressAlreadyApplied = 10011      // 地址已生成
-export const CodeInvalidPhone = 10012       // 手机号码不合法
-export const CodeDeleteUserFail = 10013     // 删除用户失败
-export const CodeUserNotExist = 10014       // 用户不存在
-export const CodePhoneRegistered = 10015    // 手机号已注册
-export const CodeAddressNotExist = 10016    // 地址不存在
-export const CodePhoneNumberNotApply = 10017      // 此手机号暂未申请NID
+export const CodeNeedLogin = 10001          // 需要登录
+export const CodeWrongPasswd = 10002        // 密码错误
+export const CodeRegisterFail = 10003       // 用户注册失败
+export const CodeDeleteUserFail = 10004     // 删除用户失败
+export const CodeInvalidPhone = 10005       // 无效手机号码
+export const CodeInvalidRole = 10006        // 无效角色
+export const CodeInvalidEmail = 10007       // 无效邮箱
+export const CodeEditUserFail = 10008       // 修改用户失败
+export const CodeNIDNotExist = 10009        // NID不存在
+export const CodeFrequentAddress = 10010    // 请勿频繁生成地址
+export const CodeGenerateAddressFail = 10011       // 地址生成失败
+export const CodeTraceAddressFail = 10012   // 地址溯源失败
+export const CodeGetKeyFail = 10013         // 获取密钥出错
+export const CodeDecryptFail = 10014        // 解密出错
+export const CodeQueryAddressFail = 10015          // 地址查询失败
+export const CodeDeleteAddressFail = 10016  // 地址删除失败
+export const CodeFlushUserFail = 10017      // 批量获取用户失败
+export const CodeNIDApplied = 10018         // 此NID已生成地址
 
 function getMsgByCode(code) {
   switch(code) {
@@ -57,38 +58,40 @@ function getMsgByCode(code) {
         },
       })
       return i18n.global.t('error.needLogin')
-    case CodeRegisterFail:
-      return i18n.global.t('error.registerFail')
-    case CodeGenerateFail:
-      return i18n.global.t('error.generateAddressFail')
-    case CodeQueryFail:
-      return i18n.global.t('error.queryAddressFail')
     case CodeWrongPasswd:
       return i18n.global.t('error.wrongPasswd')
-    case CodeNeedNID:
-      return i18n.global.t('error.missingNID')
+    case CodeRegisterFail:
+      return i18n.global.t('error.registerFail')
+    case CodeDeleteUserFail:
+      return i18n.global.t('error.deleteUserFail')
+    case CodeInvalidPhone:
+      return i18n.global.t('error.invalidPhone')
+    case CodeInvalidRole:
+      return i18n.global.t('error.invalidRole')
+    case CodeInvalidEmail:
+      return i18n.global.t('error.invalidEmail')
+    case CodeEditUserFail:
+      return i18n.global.t('error.editUserFail')
+    case CodeNIDNotExist:
+      return i18n.global.t('error.NIDNotExist')
+    case CodeFrequentAddress:
+      return i18n.global.t('error.frequentAddress')
+    case CodeGenerateAddressFail:
+      return i18n.global.t('error.generateAddressFail')
+    case CodeTraceAddressFail:
+      return i18n.global.t('error.traceAddressFail')
     case CodeGetKeyFail:
       return i18n.global.t('error.getKeyFail')
     case CodeDecryptFail:
       return i18n.global.t('error.decryptFail')
-    case CodeEncryptFail:
-      return i18n.global.t('error.encryptFail')
-    case CodeGetUserFail:
-      return i18n.global.t('error.getUserFail')
-    case CodeAddressAlreadyApplied:
-      return i18n.global.t('error.addressAlreadyApplied')
-    case CodeInvalidPhone:
-      return i18n.global.t('error.invalidPhone')
-    case CodeDeleteUserFail:
-      return i18n.global.t('error.deleteUserFail')
-    case CodeUserNotExist:
-      return i18n.global.t('error.userNotExist')
-    case CodePhoneRegistered:
-      return i18m.global.t('error.phoneRegistered')
-    case CodeAddressNotExist:
-      return i18n.global.t('error.addressNotExist')
-    case CodePhoneNumberNotApply:
-      return i18n.global.t('error.phoneNumberNotApply')
+    case CodeQueryAddressFail:
+      return i18n.global.t('error.queryAddressFail')
+    case CodeDeleteAddressFail:
+      return i18n.global.t('error.deleteAddressFail')
+    case CodeFlushUserFail:
+      return i18n.global.t('error.flushUserFail')
+    case CodeNIDApplied:
+      return i18n.global.t('error.NIDApplied')
     default:
       return i18n.global.t('error.unknown')
   }
