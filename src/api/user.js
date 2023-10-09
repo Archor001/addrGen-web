@@ -4,12 +4,11 @@ export const UserIdentityAdmin = 1
 export const UserIdentityUser = 2
 
 const LoginURL = '/api/login'
-const UserApplyURL = '/api/user/nid'
-const UserManageURL = '/api/admin/user'
+const UserURL = '/api/admin/user'
 
 // 用户注册NID
 export function registerNID(user){
-  return service.put(UserApplyURL, user)
+  return service.put(UserURL, user)
 }
 
 export function login(username, password) {
@@ -19,16 +18,9 @@ export function login(username, password) {
   });
 }
 
-export function addUser(user) {
-  return service.put(UserManageURL, {
-    Username: user.username,
-    Password: user.password,
-    Identity: user.identity
-  })
-}
-
+// 修改用户
 export function editUser(user) {
-  return service.post(UserManageURL, {
+  return service.post(UserURL, {
     ID: user.id,
     Username: user.username,
     Nickname: user.nickname,
@@ -37,16 +29,18 @@ export function editUser(user) {
   })
 }
 
+// 删除用户
 export function deleteUser(nid) {
-  return service.delete(UserManageURL, {
+  return service.delete(UserURL, {
     params: {
       nid
     }
   })
 }
 
+// 批量获取用户
 export function getUser(offset, limit, content) {
-  return service.get(UserManageURL,{
+  return service.get(UserURL,{
     params: {
       offset,limit,content
     }

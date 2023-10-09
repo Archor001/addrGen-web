@@ -7,9 +7,6 @@
         <el-form-item width="100%" :label="t('label.IPv6Address')" prop="queryAddress">
           <el-input v-model="queryForm.queryAddress" :placeholder="t('holder.plsInputIPv6Address')"></el-input>
         </el-form-item>
-        <el-form-item width="100%" :label="t('label.ISPPrefixLength')" prop="prefixLength">
-          <el-input v-model="queryForm.prefixLength" :placeholder="t('holder.plsInputPrefixLength')"></el-input>
-        </el-form-item>
       </el-form>
       <div>
         <el-button type="primary" @click="handleQueryAddress()" class="addr-query-button" :loading="waitQuery">{{ t('button.addressQuery') }}</el-button>

@@ -53,8 +53,7 @@
         // 成功
         login(FormDatas.username, FormDatas.password).then(response => {
           //登录成功
-          store.commit('setIdentity', response.data['data'].identity)
-          store.commit('setUsername', response.data['data'].username)
+          store.commit('setIdentity', 1)
           router.replace({path: '/'})
         }).catch(error => {
           if (error.data.msg && error.data.msg.length > 0)

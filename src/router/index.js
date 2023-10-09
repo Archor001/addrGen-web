@@ -9,7 +9,7 @@ const routes = [
         case 1:
           return { path: '/admin' }
         default:
-          return { path: '/user' }
+          return { path: '/login' }
       }
     }
   },
@@ -27,27 +27,17 @@ const routes = [
       name: 'UserManage',
       component: () => import('../pages/admin/UserMng.vue')
     },{
-      path: 'address',
-      name: 'AddressManage',
-      component: () => import('../pages/admin/AddressMng.vue')
-    }]
-  },
-  {
-    path: '/user',
-    name: 'UserCenter',
-    component: () => import('../pages/UserCenter.vue'),
-    children: [{
-      path: '',
+      path: 'apply',
       name: 'AddressApply',
-      component: () => import('../pages/user/AddressApply.vue')
+      component: () => import('../pages/admin/AddressApply.vue')
     },{
       path: 'query',
       name: 'AddressQuery',
-      component: () => import('../pages/user/AddressQuery.vue')
+      component: () => import('../pages/admin/AddressQuery.vue')
     },{
       path: 'nid',
       name: 'NidApply',
-      component: () => import('../pages/user/NidApply.vue')
+      component: () => import('../pages/admin/NidApply.vue')
     }]
   },
 ]

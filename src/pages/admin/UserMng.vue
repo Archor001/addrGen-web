@@ -17,21 +17,22 @@
       <el-table :data="userList" class="user-list-table" style="width: 100%" table-layout="auto">
         <el-table-column align="center" :label="t('label.username')" prop="username">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.userID')" prop="userID">
+        <el-table-column align="center" :label="t('label.name')" prop="name">
         </el-table-column>
         <el-table-column align="center" :label="t('label.NID')" prop="nid">
         </el-table-column>
         <el-table-column align="center" :label="t('label.phoneNumber')" prop="phoneNumber">
         </el-table-column>
+        <el-table-column align="center" :label="t('label.emailAddress')" prop="emailAddress">
+        </el-table-column>
+        <el-table-column align="center" :label="t('label.role')">
+          <template #default="scope">
+            <el-tag type="primary">{{ showRole(scope.row.role) }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column align="center" :label="t('label.address')">
           <template #default="scope">
             <el-tag v-if="!!scope.row.address && scope.row.address.length > 0" type="primary">{{ scope.row.address }}</el-tag>
-            <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" :label="t('label.ISPPrefix')">
-          <template #default="scope">
-            <el-tag v-if="!!scope.row.prefix && scope.row.prefix.length > 0" type="primary">{{ scope.row.prefix }}</el-tag>
             <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
           </template>
         </el-table-column>
@@ -121,6 +122,23 @@ function handleDeleteUser(user){
       ElMessage.error(res.data.msg)
     })
   })
+}
+
+function showRole(role){
+  switch(role){
+    case 1:
+      return t('label.systemManager');
+    case 2:
+      return t('label.VDCManager');
+    case 3:
+      return t('label.projectManager');
+    case 4:
+      return t('label.normalUser');
+    case 5:
+      return t('label.otherUser');
+    default:
+      return t('label.otherUser');
+  }
 }
 
 // 分页
