@@ -15,14 +15,16 @@
       <!-- Result -->
       <div class="addr-query-result" v-if="!!queryResultType">
         <div class="addr-query-result-header">{{ (queryResultType == ResultTypeSuccess) ? t('label.addressQuerySuccess') : t('label.addressQueryFail') }}</div>
-        <el-descriptions :column="2" size="default" border v-if="(queryResultType == ResultTypeSuccess)">
+        <el-descriptions :column="2" size="default" border v-if="(queryResultType == ResultTypeSuccess)" direction="vertical">
           <el-descriptions-item align="center">
             <template #label>
               <div style="display: flex; align-items: center; justify-content: center;">
-                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.address') }}</span>
+                <span style="font-size: 18px;">{{ t('label.address') }}</span>
               </div>
             </template>
-            <span class="addr-query-result-font">{{ queryResult }}</span>
+            <div style="display: flex; flex-direction: column; align-items: center; padding-bottom: 10px;">
+              <el-tag class="addr-query-result-font" v-for="address in queryResult" type="primary" size="large">{{ address }}</el-tag>
+            </div>
           </el-descriptions-item>
         </el-descriptions>
       </div>
@@ -126,7 +128,7 @@ const { t } = useI18n();
 // 地址查询
 const queryForm = ref({})
 const queryFormRef = ref(null)
-const queryResult = ref('')
+const queryResult = ref([])
 
 const waitQuery= ref(false)
 const queryResultType = ref(0)
@@ -136,7 +138,7 @@ function handleQueryAddress(){
       waitQuery.value = true
       queryAddress(queryForm.value.nid).then(response => {
         ElMessage.success(t('tip.querySuccess'))
-        queryResult.value = response.data.address
+        queryResult.value = response.data.address.split(",")
         queryResultType.value = ResultTypeSuccess
       }).catch(res => {
         ElMessage.error(res.data.msg)
@@ -233,6 +235,7 @@ const traceRules = {
   padding: 15px;
 }
 .addr-query-result-font{
-  font-size: 18px;
+  font-size: 14px;
+  margin-top: 10px;
 }
 </style>

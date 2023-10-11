@@ -23,16 +23,13 @@
         </el-table-column>
         <el-table-column align="center" :label="t('label.phoneNumber')" prop="phoneNumber" width="150">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.address')" width="280">
+        <el-table-column align="center" :label="t('label.address')" width="500">
           <template #default="scope">
-            <el-tag v-if="!!scope.row.address && scope.row.address.length > 0" type="primary">{{ scope.row.address }}</el-tag>
-            <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" :label="t('label.registerTime')" width="150">
-          <template #default="scope">
-            <el-tag v-if="!!scope.row.registerTime" type="primary">{{ formatStamp(scope.row.registerTime) }}</el-tag>
-            <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
+            <el-tag v-if="!scope.row.address || scope.row.address.length <= 0" type="info">{{ t('label.notApplyYet') }}</el-tag>
+            <div v-else v-for="(address,index) of scope.row.address" style="margin-bottom: 3px;">
+              <el-tag type="primary">{{ address }}</el-tag>
+              <el-tag style="margin-left: 10px;">{{ t('label.registerTime') + ": " + (formatStamp(+scope.row.registerTime[index])) }}</el-tag>
+            </div>
           </template>
         </el-table-column>
         <el-table-column align="center" :label="t('label.role')" width="120">
@@ -65,7 +62,7 @@
       </user-register>
     </el-dialog>
 
-    <edit-user-dialog v-model="editUserVisible" :user="user" @success="confirmEdit()"></edit-user-dialog>
+    <edit-user-dialog v-model="editUserVisible" :user="initUser" @success="confirmEdit()"></edit-user-dialog>
 
   </div>
 </template>
@@ -107,7 +104,12 @@ function handleGetUser(){
     target: '.user-list-table'
   })
   getUser((currentPage.value - 1) * pageSize.value, pageSize.value, userFilterContent.value).then(response => {
-    userList.value = response.data.users
+    userList.value = response.data.users.map((user) => ({
+      ...user,
+      address: !!user.address ? user.address.split(",") : null,
+      registerTime: !!user.registerTime ? user.registerTime.split(",") : null
+    }))
+    
     total.value = response.data.count
   }).catch(res => {
     ElMessage.error(res.data.msg)
@@ -118,10 +120,10 @@ function handleGetUser(){
 
 // 修改用户
 const editUserVisible = ref(false)
-const user = ref({})
+const initUser = ref({})
 function handleEditUser(user){
   editUserVisible.value = true
-  user.value = user
+  initUser.value = user
 }
 
 function confirmEdit(){

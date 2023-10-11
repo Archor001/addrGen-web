@@ -41,7 +41,6 @@
 <script setup>
 import { Send } from '@icon-park/vue-next';
 import { applyAddress, ResultTypeSuccess, ResultTypeFail } from '../../api/address'
-import md5 from 'js-md5';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -58,8 +57,7 @@ function handleGenerateAddress(){
   applyFormRef.value.validate((valid) => {
     if(valid){
       waitGenerate.value = true
-      applyForm.value.password = md5(applyForm.value.password)
-      applyAddress(applyForm.value).then(response => {
+      applyAddress(applyForm.value.nid, applyForm.value.password).then(response => {
         ElMessage.success(t('tip.applySuccess'))
         applyResult.value = response.data.address || ''
         applyResultType.value = ResultTypeSuccess

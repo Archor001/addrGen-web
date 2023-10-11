@@ -7,11 +7,11 @@
       <el-form-item :label="t('label.NID')" prop="nid">
         <el-input v-model="userForm.nid" disabled></el-input>
       </el-form-item>
+      <el-form-item :label="t('label.password')" prop="password">
+        <el-input v-model="userForm.password" type="password" :show-password="true" :placeholder="t('holder.plsInputPassword')"></el-input>
+      </el-form-item>
       <el-form-item :label="t('label.name')" prop="name">
         <el-input v-model="userForm.name"></el-input>
-      </el-form-item>
-      <el-form-item :label="t('label.password')" prop="password">
-        <el-input v-model="userForm.password"></el-input>
       </el-form-item>
       <el-form-item :label="t('label.phoneNumber')" prop="phoneNumber">
         <el-input v-model="userForm.phoneNumber"></el-input>
@@ -38,7 +38,6 @@
 
 <script setup>
 import { toRefs, ref, onMounted, watch } from 'vue';
-import md5 from 'js-md5';
 import { editUser } from '../../api/user'
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
@@ -48,17 +47,20 @@ const props = defineProps({
   user:{
     type: Object,
     default:{
+      address: '',
       username: '',
+      password: '',
       name: '',
       nid: '',
       phoneNumber: '',
       emailAddress: '',
       role: 0,
+      registerTime: 0
     }
   }
 })
 
-const { user } = toRefs(props)
+const { user, nid } = toRefs(props)
 
 const userForm = ref({})
 const editUserRef = ref(null)
@@ -83,7 +85,6 @@ function confirmUser(){
   editUserRef.value.validate(valid => {
     if(valid){
       waitConfirm.value = true
-      userForm.value.password = md5(userForm.value.password)
       editUser(userForm.value).then(response => {
         ElMessage.success(t('tip.editSuccess'))
         emit('success')
