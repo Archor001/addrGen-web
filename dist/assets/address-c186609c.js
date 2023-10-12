@@ -1,1 +1,0 @@
-import{a6 as s}from"./_plugin-vue_export-helper-602c0275.js";const r="/addrgeneration/address",t="/addrgeneration/query",d=1,n=2;function o(e){return s.post(r,e)}function u(e){return s.get(r,{params:{queryAddress:e}})}function c(e){return s.get(t,{params:{nid:e}})}function p(e){return s.delete(r,{params:{deleteAddress:e}})}export{d as R,o as a,n as b,p as d,c as q,u as t};
