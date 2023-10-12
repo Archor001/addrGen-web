@@ -80,7 +80,7 @@
                 <span style="margin-left: 15px; font-size: 18px;">{{ t('label.registerTime') }}</span>
               </div>
             </template>
-            <span class="addr-query-result-font">{{ formatStamp(traceResult.registerTime) }}</span>
+            <span class="addr-query-result-font">{{ formatStamp(+traceResult.registerTime) }}</span>
           </el-descriptions-item>
           <el-descriptions-item align="center">
             <template #label>
@@ -168,6 +168,7 @@ function handleTraceAddress(){
       traceAddress(traceForm.value.address).then(response => {
         ElMessage.success(t('tip.traceSuccess'))
         traceResult.value = response.data.user
+        console.log(traceResult.value)
         traceResultType.value = ResultTypeSuccess
       }).catch(res => {
         ElMessage.error(res.data.msg)
