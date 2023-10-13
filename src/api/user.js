@@ -10,7 +10,7 @@ const UserURL = '/addrgeneration/user'
 export function registerNID(user){
   return service.put(UserURL, {
     name: user.name,
-    password: user.password
+    password: user.password,
     phoneNumber: user.phoneNumber,
     role: user.role,
     username: user.username,
@@ -30,7 +30,7 @@ export function editUser(user) {
   return service.post(UserURL, {
     nid: user.nid,
     name: user.name,
-    password: user.password
+    password: user.password,
     phoneNumber: user.phoneNumber,
     role: user.role,
     emailAddress: user.emailAddress
