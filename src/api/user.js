@@ -1,5 +1,4 @@
 import service from "./basic";
-import md5 from 'js-md5';
 
 export const UserIdentityAdmin = 1
 export const UserIdentityUser = 2
@@ -11,7 +10,7 @@ const UserURL = '/addrgeneration/user'
 export function registerNID(user){
   return service.put(UserURL, {
     name: user.name,
-    password: md5(user.password),
+    password: user.password
     phoneNumber: user.phoneNumber,
     role: user.role,
     username: user.username,
@@ -22,7 +21,7 @@ export function registerNID(user){
 export function login(username, password) {
   return service.post(LoginURL, {
     username: username,
-    password: md5(password),
+    password: password
   });
 }
 
@@ -31,7 +30,7 @@ export function editUser(user) {
   return service.post(UserURL, {
     nid: user.nid,
     name: user.name,
-    password: md5(user.password),
+    password: user.password
     phoneNumber: user.phoneNumber,
     role: user.role,
     emailAddress: user.emailAddress
