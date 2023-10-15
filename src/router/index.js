@@ -27,9 +27,9 @@ const routes = [
       name: 'AddressManage',
       component: () => import('../pages/admin/AddressMng.vue')
     },{
-      path: 'ISP',
-      name: 'AddressISP',
-      component: () => import('../pages/admin/AddressISP.vue')
+      path: 'platform',
+      name: 'SystemManage',
+      component: () => import('../pages/admin/SystemManage.vue')
     },{
       path: 'query',
       name: 'AddressQuery',

@@ -1,13 +1,14 @@
 <template>
-  <div>
+  <div style="margin: 0 200px;">
     <el-form :model="ispForm" label-width="auto" class="addr-query-form" ref="ispFormRef" :rules="ispRules">
       <el-form-item :label="t('label.ISPPrefix')" prop="isp">
-        <el-input v-model="ispForm.isp" :placeholder="t('holder.plsInputISPPrefix')"></el-input>
+        <el-input v-model="ispForm.isp" :placeholder="t('holder.plsInputISPPrefix')" class="append-input">
+          <template #append>
+            <el-button type="primary" @click="confirmISPPrefix()" :loading="waitConfirm" :icon="Send">{{ t('confirm') }}</el-button>
+          </template>
+        </el-input>
       </el-form-item>
     </el-form>
-    <div>
-      <el-button type="primary" @click="confirmISPPrefix()" :loading="waitConfirm" style="margin-top: 10px;">{{ t('confirm') }}</el-button>
-    </div>
   </div>
 </template>
 
@@ -15,6 +16,7 @@
 import { ref, watch, onMounted, toRefs } from 'vue';
 import { updateISP } from '../../api/address';
 import { useI18n } from 'vue-i18n';
+import { Send } from '@icon-park/vue-next';
 const { t } = useI18n()
 
 const props = defineProps({
@@ -88,4 +90,13 @@ const ispRules = {
 </script>
 
 <style scoped>
+.append-input :deep(.el-button){
+  background-color: #409eff;
+  color: #fff;
+  border-radius: 0px;
+}
+.append-input :deep(.el-button:hover){
+  background-color: #4240ff;
+  color: #fff;
+}
 </style>
