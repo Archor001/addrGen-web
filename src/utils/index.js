@@ -43,3 +43,11 @@ export function formatRole(role){
       return t('label.otherUser');
   }
 }
+
+export function formatRoleTag(role){
+  if(role>=1 && role<=3){
+    return 'success'
+  } else if(role>=4&&role<=5){
+    return 'warning'
+  }
+}

@@ -5,6 +5,7 @@ export const UserIdentityUser = 2
 
 const LoginURL = '/addrgeneration/login'
 const UserURL = '/addrgeneration/user'
+const SuspendUserURL = '/addrgeneration/user/suspend'
 
 // 用户注册NID
 export function registerNID(user){
@@ -37,18 +38,16 @@ export function editUser(user) {
   })
 }
 
-// 删除用户
-export function deleteUser(userContent) {
-  return service.delete(UserURL, {
-    params: {
-      userContent
-    }
+// 停用用户
+export function suspendUser(nid){
+  return service.post(SuspendUserURL, {
+    nid
   })
 }
 
 // 批量获取用户
 export function getUser(offset, limit, content) {
-  return service.get(UserURL,{
+  return service.get(UserURL+'s',{
     params: {
       offset,limit,content
     }

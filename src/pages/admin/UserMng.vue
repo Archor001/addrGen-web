@@ -2,7 +2,7 @@
   <div class="user-management-page">
     <el-row justify="space-between">
       <el-col :span="6" style="text-align: left">
-        <el-button type="primary" plain round @click="addUserVisible = true">{{ t('button.register') + t('label.user') }}</el-button>
+        <el-button type="primary" round @click="addUserVisible = true">{{ t('button.register') + t('label.user') }}</el-button>
       </el-col>
       <el-col :span="12">
         <el-input v-model="userFilterContent" @keyup.enter="handleGetUser()" :placeholder="t('holder.userFilter')">
@@ -15,35 +15,27 @@
 
     <el-row justify="center" style="margin-top: 32px">
       <el-table :data="userList" class="user-list-table" style="width: 100%" table-layout="auto">
-        <el-table-column align="center" :label="t('label.username')" prop="username" width="150">
+        <el-table-column align="center" :label="t('label.username')" prop="username">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.name')" prop="name" width="150">
+        <el-table-column align="center" :label="t('label.name')" prop="name">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.NID')" prop="nid" width="150">
+        <el-table-column align="center" :label="t('label.NID')" prop="nid">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.phoneNumber')" prop="phoneNumber" width="150">
+        <el-table-column align="center" :label="t('label.userAddress')">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.address')" width="500">
+        <el-table-column align="center" :label="t('label.phoneNumber')" prop="phoneNumber">
+        </el-table-column>
+        <el-table-column align="center" :label="t('label.role')">
           <template #default="scope">
-            <el-tag v-if="!scope.row.address || scope.row.address.length <= 0" type="info">{{ t('label.notApplyYet') }}</el-tag>
-            <div v-else v-for="(address,index) of scope.row.address" style="margin-bottom: 3px;">
-              <el-tag type="primary">{{ address }}</el-tag>
-              <el-tag style="margin-left: 10px;">{{ t('label.registerTime') + ": " + (formatStamp(+scope.row.registerTime[index])) }}</el-tag>
-            </div>
+            <el-tag :type="formatRoleTag(scope.row.role)">{{ formatRole(scope.row.role) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column align="center" :label="t('label.role')" width="120">
-          <template #default="scope">
-            <el-tag type="primary">{{ formatRole(scope.row.role) }}</el-tag>
-          </template>
+        <el-table-column align="center" :label="t('label.emailAddress')" prop="emailAddress">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.emailAddress')" prop="emailAddress" width="200">
-        </el-table-column>
-        <el-table-column align="center" :label="t('label.option')" fixed="right" width="250">
+        <el-table-column align="center" :label="t('label.option')">
           <template #default="scope">
-            <el-button type="primary" plain @click="handleEditUser(scope.row)" size="small">{{ t('button.edit') }}</el-button>
-            <el-button type="danger" plain @click="handleDeleteUser(scope.row)" size="small">{{ t('button.deleteUser') }}</el-button>
-            <el-button type="danger" plain @click="handleDeleteAddress(scope.row)" size="small">{{ t('button.deleteAddress') }}</el-button>
+            <el-button type="primary" @click="handleEditUser(scope.row)" size="small">{{ t('button.edit') }}</el-button>
+            <el-button type="danger" @click="handleSuspendUser(scope.row)" size="small">{{ t('button.suspend') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -70,9 +62,8 @@
 <script setup>
 import { Search } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
-import { getUser, deleteUser } from '../../api/user'
-import { deleteAddress } from '../../api/address'
-import { formatStamp, formatRole } from '../../utils/index'
+import { getUser, suspendUser } from '../../api/user'
+import { formatRole, formatRoleTag } from '../../utils/index'
 import UserRegister from '../../components/user/UserRegister.vue';
 import EditUserDialog from '../../components/user/EditUserDialog.vue'
 import { useI18n } from 'vue-i18n';
@@ -131,29 +122,14 @@ function confirmEdit(){
   handleGetUser()
 }
 
-// 删除用户
-function handleDeleteUser(user){
+// 停用用户
+function handleSuspendUser(user){
   ElMessageBox.confirm(t('ask.deleteUser'),'Tip',{
     confirmButtonText: t('confirm'),
     cancelButtonText: t('cancel')
   }).then(() => {
-    deleteUser(user.nid).then(response => {
-      ElMessage.success(t('tip.deleteSuccess'))
-      handleGetUser()
-    }).catch(res => {
-      ElMessage.error(res.data.msg)
-    })
-  })
-}
-
-// 删除地址
-function handleDeleteAddress(user){
-  ElMessageBox.confirm(t('ask.deleteAddress'),'Tip',{
-    confirmButtonText: t('confirm'),
-    cancelButtonText: t('cancel')
-  }).then(() => {
-    deleteAddress(user.address).then(response => {
-      ElMessage.success(t('tip.deleteSuccess'))
+    suspendUser(user.nid).then(response => {
+      ElMessage.success(t('tip.suspendSuccess'))
       handleGetUser()
     }).catch(res => {
       ElMessage.error(res.data.msg)

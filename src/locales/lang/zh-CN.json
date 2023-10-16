@@ -6,12 +6,14 @@
   "back": "返回",
   "button": {
     "addressQuery": "地址查询",
+    "applyAddress": "生成地址",
     "delete": "删除",
     "deleteAddress": "删除地址",
     "deleteUser": "删除用户",
     "edit": "修改",
     "generateAddress": "生成地址",
     "register": "注册",
+    "suspend": "停用",
     "traceQuery": "地址溯源"
   },
   "cancel": "取消",
@@ -66,7 +68,7 @@
     "plsInputStandardISPPrefix": "请输入标准格式的ISP地址前缀(选填，例如2001:0250)",
     "plsInputUserID": "请输入学号/工号",
     "plsInputUsername": "请输入用户名",
-    "userFilter": "可按学号、用户名模糊搜索",
+    "userFilter": "可按用户名、姓名模糊搜索",
     "username": "请输入用户名"
   },
   "label": {
@@ -83,6 +85,8 @@
     "addressQuery": "地址查询",
     "addressQueryFail": "地址查询失败！",
     "addressQuerySuccess": "地址查询成功！",
+    "addressStatus": "地址状态",
+    "addressTimeout": "地址过期时间",
     "addressTrace": "地址溯源",
     "addressTraceFail": "地址溯源失败！",
     "addressTraceSuccess": "地址溯源成功！",
@@ -106,8 +110,11 @@
     "role": "角色",
     "status": "状态",
     "suffix": "后缀",
+    "systemManage": "平台管理",
     "systemManager": "系统管理员",
+    "systemTitle": "多租户云平台地址生成系统",
     "user": "用户",
+    "userAddress": "用户状态",
     "userID": "用户ID",
     "username": "用户名"
   },
@@ -120,12 +127,13 @@
     "loginSuccess": "登录成功",
     "querySuccess": "查询成功",
     "registerSuccess": "注册成功",
+    "suspendSuccess": "已停用此用户",
     "traceSuccess": "溯源成功"
   },
   "title": {
     "addressApply": "地址生成",
     "addressManage": "地址管理",
-    "addressQuery": "地址查询与溯源",
+    "addressQuery": "地址溯源",
     "applyAddress": "地址生成",
     "applyNID": "账号注册",
     "nidApply": "创建用户",

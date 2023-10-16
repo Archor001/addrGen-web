@@ -23,9 +23,13 @@ const routes = [
     name: 'AdminCenter',
     component: () => import('../pages/AdminCenter.vue'),
     children: [{
-      path: '',
+      path: 'user',
       name: 'UserManage',
       component: () => import('../pages/admin/UserMng.vue')
+    },{
+      path: 'address',
+      name: 'AddressManage',
+      component: () => import('../pages/admin/AddressMng.vue')
     },{
       path: 'apply',
       name: 'AddressApply',
@@ -35,9 +39,13 @@ const routes = [
       name: 'AddressQuery',
       component: () => import('../pages/admin/AddressQuery.vue')
     },{
-      path: 'nid',
+      path: 'create',
       name: 'NidApply',
       component: () => import('../pages/admin/NidApply.vue')
+    },{
+      path: 'systen',
+      name: 'SystemManage',
+      component: () => import('../pages/admin/SystemMng.vue')
     }]
   },
 ]

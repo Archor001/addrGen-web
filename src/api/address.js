@@ -6,6 +6,15 @@ const QueryAddressURL = '/addrgeneration/query'
 export const ResultTypeSuccess = 1
 export const ResultTypeFail = 2
 
+// 批量获取地址
+export function getUser(offset, limit, content) {
+  return service.get(UserURL+'es',{
+    params: {
+      offset,limit,content
+    }
+  })
+}
+
 // 地址生成
 export function applyAddress(nid, password){
   return service.post(AddressURL, {

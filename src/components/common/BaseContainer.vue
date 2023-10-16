@@ -4,12 +4,15 @@
       <!--左侧-->
       <div class="menubar" style="left: 0;">
         <slot name="left">
-          <el-button @click="goBack()" v-show="canBack">{{t('back')}}</el-button>
+          <div style="display: flex; align-items: center;">
+            <System theme="outline" size="20" fill="#dff9fb" style="margin-top:3px;"/>
+            <span text class="main-title" style="margin-left: 10px;">{{t('label.systemTitle')}}</span>
+          </div>
         </slot>
       </div>
 
       <!--中部-->
-      <div class="menubar menubar-center">
+      <div class="menubar menubar-center" style="margin-left: -150px;">
         <slot name="center"></slot>
       </div>
       
@@ -68,6 +71,7 @@
 </template>
 
 <script setup>
+import { System } from '@icon-park/vue-next';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useStore } from 'vuex';
@@ -76,14 +80,6 @@ import { login, UserIdentityAdmin, UserIdentityUser } from '../../api/user';
 const { t } = useI18n()
 const router = useRouter();
 const store = useStore();
-
-const canBack = computed(() => {
-  return window.history.length > 1;
-});
-
-function goBack() {
-  router.go(-1);
-}
 
 function handleSelectLang(lang) {
   store.commit('changeLocale', lang)
@@ -197,5 +193,10 @@ const loginRules = reactive({
 .login-button{
   width: 30%;
   margin-top: 10px;
+}
+.main-title{
+  font-size: 20px;
+  font-weight: bold;
+  color: #dff9fb;
 }
 </style>
