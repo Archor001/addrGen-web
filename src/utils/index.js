@@ -60,6 +60,8 @@ export function formatStatus(status){
       return t('label.suspend')
     case 3:
       return t('label.deleted')
+    default:
+      return t('label.unknown')
   }
 }
 
@@ -67,4 +69,5 @@ export function formatStatusTag(status){
   if(status == 1) return 'success'
   if(status == 2) return 'warning'
   if(status == 3) return 'danger'
+  return 'danger'
 }

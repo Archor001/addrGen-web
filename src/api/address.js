@@ -7,8 +7,8 @@ export const ResultTypeSuccess = 1
 export const ResultTypeFail = 2
 
 // 批量获取地址
-export function getUser(offset, limit, content) {
-  return service.get(UserURL+'es',{
+export function getAddress(offset, limit, content) {
+  return service.get(AddressURL+'es',{
     params: {
       offset,limit,content
     }
