@@ -51,3 +51,20 @@ export function formatRoleTag(role){
     return 'warning'
   }
 }
+
+export function formatStatus(status){
+  switch(status){
+    case 1:
+      return t('label.normal')
+    case 2:
+      return t('label.suspend')
+    case 3:
+      return t('label.deleted')
+  }
+}
+
+export function formatStatusTag(status){
+  if(status == 1) return 'success'
+  if(status == 2) return 'warning'
+  if(status == 3) return 'danger'
+}

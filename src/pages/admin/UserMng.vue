@@ -21,7 +21,10 @@
         </el-table-column>
         <el-table-column align="center" :label="t('label.NID')" prop="nid">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.userAddress')">
+        <el-table-column align="center" :label="t('label.userAddress')" prop="status">
+          <template #default="scope">
+            <el-tag :type="formatStatusTag(scope.row.status)">{{ formatStatus(scope.row.status) }}</el-tag>
+          </template>
         </el-table-column>
         <el-table-column align="center" :label="t('label.phoneNumber')" prop="phoneNumber">
         </el-table-column>
@@ -63,7 +66,7 @@
 import { Search } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
 import { getUser, suspendUser } from '../../api/user'
-import { formatRole, formatRoleTag } from '../../utils/index'
+import { formatRole, formatRoleTag, formatStatus, formatStatusTag } from '../../utils/index'
 import UserRegister from '../../components/user/UserRegister.vue';
 import EditUserDialog from '../../components/user/EditUserDialog.vue'
 import { useI18n } from 'vue-i18n';

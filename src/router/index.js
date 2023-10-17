@@ -7,7 +7,7 @@ const routes = [
     redirect: to => { // 按身份重定向，无身份时定向至登录页
       switch (+store.state.identity) {
         case 1:
-          return { path: '/admin' }
+          return { path: '/admin/user' }
         default:
           return { path: '/login' }
       }
