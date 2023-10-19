@@ -95,6 +95,7 @@
     "deleted": "已删除",
     "editUser": "修改用户",
     "emailAddress": "邮箱地址",
+    "hour": "小时",
     "information": "信息",
     "name": "姓名",
     "nidApplyFail": "用户注册失败！",
@@ -134,7 +135,8 @@
     "querySuccess": "查询成功",
     "registerSuccess": "注册成功",
     "suspendSuccess": "已停用此用户",
-    "traceSuccess": "溯源成功"
+    "traceSuccess": "溯源成功",
+    "updateSuccess": "修改成功"
   },
   "title": {
     "addressApply": "地址生成",
