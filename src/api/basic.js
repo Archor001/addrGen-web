@@ -38,6 +38,8 @@ export const CodeQueryAddressFail = 10015          // 地址查询失败
 export const CodeDeleteAddressFail = 10016  // 地址删除失败
 export const CodeFlushUserFail = 10017      // 批量获取用户失败
 export const CodeNIDApplied = 10018         // 此NID已生成地址
+export const CodeBatchGetAddressFail = 10019      //  批量获取地址失败
+export const CodeNIDNoAddress = 10020       // 此NID未创建任何地址
 
 function getMsgByCode(code) {
   switch(code) {
@@ -92,6 +94,10 @@ function getMsgByCode(code) {
       return i18n.global.t('error.flushUserFail')
     case CodeNIDApplied:
       return i18n.global.t('error.NIDApplied')
+    case CodeBatchGetAddressFail:
+      return i18n.global.t('error.batchGetAddressFail')
+    case CodeNIDNoAddress:
+      return i18n.global.t('error.NIDNoAddress')
     default:
       return i18n.global.t('error.unknown')
   }

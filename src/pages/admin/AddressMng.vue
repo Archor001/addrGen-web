@@ -34,8 +34,8 @@
         <el-table-column align="center" :label="t('label.registerTime')" prop="registerTime">
           <template #default="scope">
             <div style="display: flex; align-items: center; justify-content: center;">
-              <Time theme="outline" size="16" fill="#333" style="margin-top: 5px;"/>
-              <span style="margin-left: 3px; font-size:16px;">{{ formatStamp(scope.row.registerTime) }}</span>
+              <Time theme="outline" size="14" fill="#333" style="margin-top: 5px;"/>
+              <span style="margin-left: 3px; font-size:14px;">{{ formatStamp(scope.row.registerTime) }}</span>
             </div>
           </template>
         </el-table-column>

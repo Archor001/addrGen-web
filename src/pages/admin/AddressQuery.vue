@@ -15,16 +15,62 @@
       <!-- Result -->
       <div class="addr-query-result" v-if="!!queryResultType">
         <div class="addr-query-result-header">{{ (queryResultType == ResultTypeSuccess) ? t('label.addressQuerySuccess') : t('label.addressQueryFail') }}</div>
-        <el-descriptions :column="2" size="default" border v-if="(queryResultType == ResultTypeSuccess)" direction="vertical">
+        <el-descriptions :column="4" size="default" style="width: 70%;" border v-if="(queryResultType == ResultTypeSuccess)" direction="vertical">
           <el-descriptions-item align="center">
             <template #label>
               <div style="display: flex; align-items: center; justify-content: center;">
-                <span style="font-size: 18px;">{{ t('label.address') }}</span>
+                <el-icon><Computer theme="filled" size="20" fill="#4a90e2" /></el-icon>
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.address') }}</span>
               </div>
             </template>
             <div style="display: flex; flex-direction: column; align-items: center; padding-bottom: 10px;">
-              <el-tag class="addr-query-result-font" v-for="address in queryResult" type="primary" size="large">{{ address }}</el-tag>
+              <el-tag class="addr-query-result-font" v-for="address in queryResult.address" type="primary" size="large">{{ address }}</el-tag>
             </div>
+          </el-descriptions-item>
+          <el-descriptions-item align="center">
+            <template #label>
+              <div style="display: flex; align-items: center; justify-content: center;">
+                <el-icon><User theme="outline" size="20" fill="#4a90e2"/></el-icon>
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.username') }}</span>
+              </div>
+            </template>
+            <span class="addr-query-result-font">{{ queryResult.user.username }}</span>
+          </el-descriptions-item>
+          <el-descriptions-item align="center">
+            <template #label>
+              <div style="display: flex; align-items: center;justify-content: center;">
+                <el-icon><User theme="filled" size="20" fill="#4a90e2" /></el-icon>
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.name') }}</span>
+              </div>
+            </template>
+            <span class="addr-query-result-font">{{ queryResult.user.name }}</span>
+          </el-descriptions-item>
+          <el-descriptions-item align="center">
+            <template #label>
+              <div style="display: flex; align-items: center;justify-content: center;">
+                <el-icon><Phone theme="filled" size="20" fill="#4a90e2" /></el-icon>
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.phoneNumber') }}</span>
+              </div>
+            </template>
+            <span class="addr-query-result-font">{{ queryResult.user.phoneNumber }}</span>
+          </el-descriptions-item>
+          <el-descriptions-item align="center">
+            <template #label>
+              <div style="display: flex; align-items: center;justify-content: center;">
+                <el-icon><Mail theme="filled" size="20" fill="#4a90e2"/></el-icon>
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.emailAddress') }}</span>
+              </div>
+            </template>
+            <span class="addr-query-result-font">{{ queryResult.user.emailAddress }}</span>
+          </el-descriptions-item>
+          <el-descriptions-item align="center">
+            <template #label>
+              <div style="display: flex; align-items: center;justify-content: center;">
+                <el-icon><People theme="filled" size="20" fill="#4a90e2" /></el-icon>
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.role') }}</span>
+              </div>
+            </template>
+            <span class="addr-query-result-font">{{ formatRole(queryResult.user.role) }}</span>
           </el-descriptions-item>
         </el-descriptions>
       </div>
@@ -118,7 +164,7 @@
 </template>
 
 <script setup>
-import { Mail, Phone, Time, User, People } from '@icon-park/vue-next';
+import { Mail, Phone, Time, User, People, Computer } from '@icon-park/vue-next';
 import { ref } from 'vue';
 import { formatStamp, formatRole } from '../../utils/index'
 import { queryAddress, ResultTypeSuccess, ResultTypeFail, traceAddress } from '../../api/address'
@@ -128,7 +174,7 @@ const { t } = useI18n();
 // 地址查询
 const queryForm = ref({})
 const queryFormRef = ref(null)
-const queryResult = ref([])
+const queryResult = ref({})
 
 const waitQuery= ref(false)
 const queryResultType = ref(0)
@@ -138,7 +184,8 @@ function handleQueryAddress(){
       waitQuery.value = true
       queryAddress(queryForm.value.nid).then(response => {
         ElMessage.success(t('tip.querySuccess'))
-        queryResult.value = response.data.address.split(",")
+        queryResult.value.address = response.data.address.split(",")
+        queryResult.value.user = response.data.user
         queryResultType.value = ResultTypeSuccess
       }).catch(res => {
         ElMessage.error(res.data.msg)
