@@ -2,6 +2,7 @@ import service from "./basic";
 
 const AddressURL = '/addrgeneration/address'
 const QueryAddressURL = '/addrgeneration/query'
+const SuspendAddressURL = '/addrgeneration/address/suspend'
 
 export const ResultTypeSuccess = 1
 export const ResultTypeFail = 2
@@ -38,6 +39,13 @@ export function queryAddress(nid){
     params:{
       nid
     }
+  })
+}
+
+// 地址停用
+export function suspendAddress(address){
+  return service.post(SuspendAddressURL,{
+    address
   })
 }
 

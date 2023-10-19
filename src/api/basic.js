@@ -40,6 +40,10 @@ export const CodeFlushUserFail = 10017      // 批量获取用户失败
 export const CodeNIDApplied = 10018         // 此NID已生成地址
 export const CodeBatchGetAddressFail = 10019      //  批量获取地址失败
 export const CodeNIDNoAddress = 10020       // 此NID未创建任何地址
+export const CodeSuspendAddressFail = 10021 //  地址停用失败
+export const CodeSuspendUserFail = 10022    //  用户停用失败
+export const CodeAddressIsSuspended = 10023 //  此地址已经停用
+export const CodeUserIsSuspended = 10024    //  此用户已经停用
 
 function getMsgByCode(code) {
   switch(code) {
@@ -98,6 +102,14 @@ function getMsgByCode(code) {
       return i18n.global.t('error.batchGetAddressFail')
     case CodeNIDNoAddress:
       return i18n.global.t('error.NIDNoAddress')
+    case CodeSuspendAddressFail:
+      return i18n.global.t('error.suspendAddressFail')
+    case CodeSuspendUserFail:
+      return i18n.global.t('error.suspendUserFail') 
+    case CodeAddressIsSuspended:
+      return i18n.global.t('error.addressIsSuspended')
+    case CodeUserIsSuspended:
+      return i18n.global.t('error.userIsSuspended')
     default:
       return i18n.global.t('error.unknown')
   }

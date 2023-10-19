@@ -127,7 +127,7 @@ function confirmEdit(){
 
 // 停用用户
 function handleSuspendUser(user){
-  ElMessageBox.confirm(t('ask.deleteUser'),'Tip',{
+  ElMessageBox.confirm(t('ask.suspendUser'),'Tip',{
     confirmButtonText: t('confirm'),
     cancelButtonText: t('cancel')
   }).then(() => {

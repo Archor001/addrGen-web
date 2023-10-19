@@ -1,7 +1,9 @@
 {
   "ask": {
     "deleteAddress": "确定删除此地址？",
-    "deleteUser": "确定删除此用户？该操作会同时清除用户对应的地址"
+    "deleteUser": "确定删除此用户？该操作会同时清除用户对应的地址",
+    "suspendAddress": "确定停用此地址？该操作会导致此地址不能进行溯源",
+    "suspendUser": "确定停用此用户？该操作会使得用户无法创建和查询地址"
   },
   "back": "返回",
   "button": {
@@ -25,6 +27,7 @@
     "NIDNoAddress": "此NID未创建任何地址",
     "NIDNotExist": "NID不存在",
     "addressAlreadyApplied": "地址已生成，请勿重复生成",
+    "addressIsSuspended": "此地址已经被停用，地址溯源功能已禁用",
     "addressNotExist": "查询地址不存在",
     "batchGetAddressFail": "批量获取地址失败",
     "decryptFail": "解密失败",
@@ -48,8 +51,11 @@
     "queryAddressFail": "地址查询失败",
     "registerFail": "用户注册失败",
     "server": "服务错误",
+    "suspendAddressFail": "地址停用失败",
+    "suspendUserFail": "用户停用失败",
     "traceAddressFail": "地址溯源失败",
     "unknown": "未知错误",
+    "userIsSuspended": "此用户已经停用，地址生成和地址查询功能已被禁用",
     "userNotExist": "用户不存在",
     "wrongPasswd": "密码错误"
   },
@@ -134,6 +140,7 @@
     "loginSuccess": "登录成功",
     "querySuccess": "查询成功",
     "registerSuccess": "注册成功",
+    "suspendAddress": "已停用此地址",
     "suspendSuccess": "已停用此用户",
     "traceSuccess": "溯源成功",
     "updateSuccess": "修改成功"

@@ -39,9 +39,9 @@ export function editUser(user) {
 }
 
 // 停用用户
-export function suspendUser(nid){
+export function suspendUser(userContent){
   return service.post(SuspendUserURL, {
-    nid
+    userContent
   })
 }
 

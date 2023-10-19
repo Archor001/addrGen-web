@@ -67,7 +67,7 @@
 import { Time } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
 import AddressGenerate from '../../components/address/AddressGenerate.vue'
-import { getAddress } from '../../api/address'
+import { getAddress, suspendAddress } from '../../api/address'
 import { useI18n } from 'vue-i18n';
 import { formatStamp, formatStatus, formatStatusTag } from '../../utils';
 const { t } = useI18n()
@@ -108,8 +108,18 @@ function confirmApplyAddress(){
 }
 
 // 停用地址
-function handleSuspendAddress(address){
-
+function handleSuspendAddress(row){
+  ElMessageBox.confirm(t('ask.suspendAddress'),'Tip',{
+    confirmButtonText: t('confirm'),
+    cancelButtonText: t('cancel')
+  }).then(() => {
+    suspendAddress(row.address).then(response => {
+      ElMessage.success(t('tip.suspendAddress'))
+      handleGetAddress()
+    }).catch(res => {
+      ElMessage.error(res.data.msg)
+    })
+  })
 }
 
 // 分页
