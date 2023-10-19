@@ -46,7 +46,7 @@ export function formatRole(role){
 
 export function formatRoleTag(role){
   if(role>=1 && role<=3){
-    return 'success'
+    return 'primary'
   } else if(role>=4&&role<=5){
     return 'warning'
   }

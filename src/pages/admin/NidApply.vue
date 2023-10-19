@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { User, Phone, IdCardV } from '@icon-park/vue-next';
+import { IdCardV } from '@icon-park/vue-next';
 import { useI18n } from 'vue-i18n';
 import { ref } from 'vue';
 import UserRegister from '../../components/user/UserRegister.vue'

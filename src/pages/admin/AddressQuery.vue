@@ -9,7 +9,7 @@
         </el-form-item>
       </el-form>
       <div>
-        <el-button type="primary" @click="handleQueryAddress()" class="addr-query-button" :loading="waitTrace">{{ t('button.addressQuery') }}</el-button>
+        <el-button type="primary" @click="handleQueryAddress()" class="addr-query-button" :loading="waitQuery">{{ t('button.addressQuery') }}</el-button>
       </div>
 
       <!-- Result -->

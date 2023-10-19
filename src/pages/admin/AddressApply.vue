@@ -1,36 +1,18 @@
 <template>
   <div class="addr-apply-container">
-    <!-- 地址生成表单 -->
-    <div class="addr-generate">
-      <div class="addr-generate-header">
-        <span>{{ t('label.addressApply') }}</span>
-      </div>
-      <el-form :model="applyForm" label-width="auto" class="addr-generate-form" ref="applyFormRef" :rules="applyRules">
-        <el-form-item :label="t('label.NID')" prop="nid">
-          <el-input v-model="applyForm.nid" :placeholder="t('holder.plsInputNID')"></el-input>
-        </el-form-item>
-        <el-form-item :label="t('label.password')" prop="password">
-          <el-input v-model="applyForm.password" :placeholder="t('holder.plsInputPassword')" show-password>
-          </el-input>
-        </el-form-item>
-      </el-form>
-      <div>
-        <el-button type="primary" @click="handleGenerateAddress()" :icon="Send" 
-          class="addr-generate-button" :loading="waitGenerate">{{ t('button.generateAddress') }}</el-button>
-      </div>
-    </div>
+    <address-generate @generate="confirmGenerate"></address-generate>
 
     <!-- Result -->
-    <div class="addr-generate-result" v-if="!!applyResultType">
-      <div class="addr-generate-result-header">{{ !!applyResult ? t('label.addressApplySuccess') : t('label.addressApplyFail') }}</div>
-      <el-descriptions :column="2" size="default" border v-if="!!applyResult">
+    <div class="addr-generate-result" v-if="!!isApplied">
+      <div class="addr-generate-result-header">{{ !!address ? t('label.addressApplySuccess') : t('label.addressApplyFail') }}</div>
+      <el-descriptions :column="2" size="default" border v-if="!!address">
         <el-descriptions-item align="center">
           <template #label>
             <div style="display: flex; align-items: center; justify-content: center;">
               <span style="font-size: 18px;">{{ t('label.address') }}</span>
             </div>
           </template>
-          <span style="font-size: 18px;">{{ applyResult }}</span>
+          <span style="font-size: 18px;">{{ address }}</span>
         </el-descriptions-item>
       </el-descriptions>
     </div>
@@ -39,43 +21,18 @@
 </template>
 
 <script setup>
-import { Send } from '@icon-park/vue-next';
-import { applyAddress, ResultTypeSuccess, ResultTypeFail } from '../../api/address'
+import AddressGenerate from '../../components/address/AddressGenerate.vue'
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
-const applyForm = ref({})     // 地址生成的表单
-const applyFormRef = ref(null)
-
-const applyResult = ref('')   // 地址生成结果
+const address = ref('')   // 地址生成结果
 
 // 地址生成
-const waitGenerate = ref(false)
-const applyResultType = ref(0)
-function handleGenerateAddress(){
-  applyFormRef.value.validate((valid) => {
-    if(valid){
-      waitGenerate.value = true
-      applyAddress(applyForm.value.nid, applyForm.value.password).then(response => {
-        ElMessage.success(t('tip.applySuccess'))
-        applyResult.value = response.data.address || ''
-        applyResultType.value = ResultTypeSuccess
-      }).catch(res => {
-        ElMessage.error(res.data.msg)
-        applyResultType.value = ResultTypeFail
-      }).finally(()=>{
-        waitGenerate.value = false
-      })
-    } else {
-      return
-    }
-  })
-}
-
-const applyRules = {
-  nid: [{required: true, message: t('holder.plsInputNID'), trigger: 'blur'}],
-  password: [{required: true, message: t('holder.plsInputPassword'), trigger: 'blur'}],
+const isApplied = ref(0)
+function confirmGenerate(data){
+  isApplied.value = true
+  address.value = data
 }
 
 </script>
@@ -85,30 +42,6 @@ const applyRules = {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.addr-generate{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-}
-.addr-generate-header{
-  width: 90%;
-  margin: 0 auto 30px;
-  padding: 10px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #343a40;
-  font-family:'Times New Roman', Times, serif, Georgia,"Microsoft YaHei",sans-serif;
-  text-align: left;
-  border-bottom: 1px solid #eeeeee;
-}
-.addr-generate-form{
-  width: 70%;
-}
-.addr-generate-button{
-  margin: 5px 0 15px;
 }
 .addr-generate-result{
   width: 50%;

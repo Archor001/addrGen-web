@@ -51,12 +51,22 @@
             :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
         </el-row>
     </el-row>
+
+    <el-dialog v-model="applyAddressVisible" draggable>
+      <address-generate @generate="confirmApplyAddress">
+        <template #cancel>
+          <el-button type="danger" @click="applyAddressVisible = false">{{ t('cancel') }}</el-button>
+        </template>
+      </address-generate>
+    </el-dialog>
+
   </div>
 </template>
 
 <script setup>
 import { Time } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
+import AddressGenerate from '../../components/address/AddressGenerate.vue'
 import { getAddress } from '../../api/address'
 import { useI18n } from 'vue-i18n';
 import { formatStamp, formatStatus, formatStatusTag } from '../../utils';
@@ -88,6 +98,13 @@ function handleGetAddress(){
   }).finally(()=>{
     loadingInstance.close()
   })
+}
+
+// 确认生成地址
+const applyAddressVisible = ref(false)
+function confirmApplyAddress(){
+  applyAddressVisible.value = false
+  handleGetAddress()
 }
 
 // 停用地址
