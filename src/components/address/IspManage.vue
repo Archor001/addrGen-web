@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 0 200px;">
+  <div style="margin: 0 10%;">
     <el-form :model="ispForm" label-width="auto" class="addr-query-form" ref="ispFormRef" :rules="ispRules">
       <el-form-item :label="t('label.ISPPrefix')" prop="isp">
         <el-input v-model="ispForm.isp" :placeholder="t('holder.plsInputISPPrefix')" class="append-input">

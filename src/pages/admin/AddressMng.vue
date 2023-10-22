@@ -60,7 +60,7 @@
           :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </el-row>
     </div>
-    <el-dialog v-model="editISPVisible" :title="!ISPPrefix? t('label.createISP') : t('label.editISP')" draggable width="25%">
+    <el-dialog v-model="editISPVisible" :title="!ISPPrefix? t('label.createISP') : t('label.editISP')" draggable width="700">
       <isp-manage :isp="ISPPrefix" :length="ISPLength" :edit="!!ISPPrefix && ISPPrefix.length > 0" @success="confirmSubmit()"></isp-manage>
     </el-dialog>
   </div>
@@ -114,9 +114,9 @@ function flushISPandAddress(){
     userList.value = resp.data.users
     total.value = resp.data.count
   }).catch(res => {
-    console.log(res)
     ElMessage.error(res.data.msg)
   }).finally(() => {
+    ispLoadingInstance.close()
     addrLoadingInstance.close()
   })
 }
