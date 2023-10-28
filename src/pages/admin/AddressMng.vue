@@ -35,6 +35,11 @@
         </el-table-column>
         <el-table-column align="center" :label="t('label.phoneNumber')" prop="phoneNumber">
         </el-table-column>
+        <el-table-column align="center" :label="t('label.userStatus')" prop="status">
+          <template #default="scope">
+            <el-tag :type="formatStatusTag(scope.row.status)">{{ formatStatus(scope.row.status) }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column align="center" :label="t('label.address')">
           <template #default="scope">
             <el-tag v-if="!!scope.row.address && scope.row.address.length > 0" type="primary">{{ scope.row.address }}</el-tag>
@@ -45,6 +50,11 @@
           <template #default="scope">
             <el-tag v-if="!!scope.row.registerTime" type="primary">{{ formatStamp(scope.row.registerTime) }}</el-tag>
             <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" :label="t('label.addrStatus')">
+          <template #default="scope">
+            <el-tag :type="formatStatusTag(scope.row.addrStatus)">{{ formatStatus(scope.row.addrStatus) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column align="center" :label="t('label.option')">
@@ -71,7 +81,7 @@ import { Search, Refresh, EditOne } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
 import { getUser, deleteUser } from '../../api/user';
 import { getISP } from '../../api/address';
-import { formatStamp } from '../../utils';
+import { formatStamp, formatStatus, formatStatusTag } from '../../utils';
 import IspManage from '../../components/address/IspManage.vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
@@ -154,7 +164,7 @@ function handleDeleteUser(user){
     confirmButtonText: t('confirm'),
     cancelButtonText: t('cancel')
   }).then(() => {
-    deleteUser(user.nid).then(response => {
+    deleteUser(user.phoneNumber).then(response => {
       ElMessage.success(t('tip.deleteSuccess'))
       flushAddress()
     }).catch(res => {
