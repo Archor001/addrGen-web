@@ -1,0 +1,41 @@
+{
+  "back": "Back",
+  "button": {
+    "addressQuery": "Query Address",
+    "generateAddress": "Generate"
+  },
+  "holder": {
+    "password": "Please input password",
+    "plsInput64Suffix": "Please input 64-bits address suffix",
+    "plsInputNid": "Please input NID",
+    "plsInputPassword": "Please input password",
+    "plsInputStandardISPPrefix": "Please input standart ISP address prefix(such as 2001:0250)",
+    "userFilter": "Search by username and userID",
+    "username": "Please input username"
+  },
+  "label": {
+    "IPv6Address": "IPv6 Address",
+    "ISPPrefix": "ISP Address Prefix",
+    "addressApply": "Apply Address",
+    "addressQuery": "Query Address",
+    "password": "Password",
+    "plsInputIPv6Address": "Please input IPv6 address",
+    "prefix": "Prefix",
+    "suffix": "Suffix",
+    "username": "Username"
+  },
+  "login": "Login",
+  "logout": "Logout",
+  "title": {
+    "addressManage": "Address Manage",
+    "applyAddress": "Apply Address",
+    "applyNID": "Register Account",
+    "switchToAdmin": "Switch To Admin",
+    "userManage": "User Manage"
+  },
+  "user": {
+    "logout": "Logout",
+    "name": "User",
+    "password": "Password"
+  }
+}
