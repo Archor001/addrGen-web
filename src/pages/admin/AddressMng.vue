@@ -8,7 +8,6 @@
           <span>{{ t('label.ISPPrefix') + "：" }}</span>
           <el-tag style="margin-left: 5px;" class="ISP-tag" type="primary" size="large">{{ ISPPrefix + "::/" + ISPLength}}</el-tag>
           <el-button style="margin-left: 15px;" plain round :icon="EditOne" @click="handleEditISP()">{{ t('button.editISP') }}</el-button>
-          <el-button style="margin-left: 15px;" plain round :icon="Refresh" @click="handleRegenAddress()">{{ t('button.regenerateAddress') }}</el-button>
         </div>
         <div style="display:flex; align-items: center;" v-else>
           <el-button round :icon="EditOne" @click="handleEditISP()" type="success">{{ t('button.createISP') }}</el-button>
@@ -71,7 +70,7 @@ import { InfoFilled } from '@element-plus/icons-vue'
 import { Search, Refresh, EditOne } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
 import { getUser, deleteUser } from '../../api/user';
-import { regenerateAddress, getISP } from '../../api/address';
+import { getISP } from '../../api/address';
 import { formatStamp } from '../../utils';
 import IspManage from '../../components/address/IspManage.vue';
 import { useI18n } from 'vue-i18n';
@@ -147,26 +146,6 @@ function handleEditISP(){
 function confirmSubmit(){
   editISPVisible.value = false
   initAddressMng()
-}
-
-// 重新生成地址
-function handleRegenAddress(){
-  ElMessageBox.confirm(t('warning.changeISPTakesTime'),t('title.warning'),{
-    confirmButtonText: t('confirm'),
-    cancelButtonText: t('cancel')
-  })
-  const loadingInstance = ElLoading.service({
-    fullscreen: false,
-    target: '.addr-list-table'
-  })
-  regenerateAddress(ISPPrefix.value.isp).then(response => {
-    ElMessage.success(t('tip.regenSuccess'))
-    flushAddress()
-  }).catch(res => {
-    ElMessage.error(res.data.msg)
-  }).finally(() => {
-    loadingInstance.close()
-  })
 }
 
 // 删除用户

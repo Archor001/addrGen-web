@@ -34,8 +34,6 @@ export function getISP(){
 }
 
 // 重新生成地址
-export function regenerateAddress(isp){
-  return service.post(RegenAddressURL, {
-    isp
-  })
+export function regenerateAddress(){
+  return service.post(RegenAddressURL)
 }

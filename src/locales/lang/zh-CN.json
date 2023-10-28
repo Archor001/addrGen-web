@@ -56,6 +56,7 @@
     "userFilter": "可按学号、用户名模糊搜索",
     "username": "请输入用户名"
   },
+  "hour": "小时",
   "label": {
     "ID": "学号/工号",
     "IPv6Address": "IPv6地址前64位",
@@ -82,10 +83,12 @@
     "platformManage": "平台管理",
     "plsInputIPv6Address": "请输入ipv6地址",
     "prefix": "前缀",
+    "regenAddress": "重新生成地址",
     "registerTime": "地址生成时间",
     "registryNID": "注册NID",
     "status": "状态",
     "suffix": "后缀",
+    "syncAddressGap": "同步用户信息周期",
     "systemTitle": "5G专网IPv6地址生成系统",
     "user": "用户",
     "userID": "用户ID",
@@ -93,6 +96,7 @@
   },
   "login": "登录",
   "logout": "注销",
+  "set": "设置",
   "tip": {
     "applySuccess": "生成成功",
     "deleteSuccess": "删除成功",
@@ -102,7 +106,8 @@
     "needISPToQueryAddress": "需要先创建ISP地址前缀才能进行地址溯源(查询)",
     "querySuccess": "查询成功",
     "regenSuccess": "重新生成地址成功",
-    "registerSuccess": "注册成功"
+    "registerSuccess": "注册成功",
+    "setSuccess": "设置成功"
   },
   "title": {
     "addressManage": "地址管理",
