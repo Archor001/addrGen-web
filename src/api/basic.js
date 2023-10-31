@@ -87,7 +87,7 @@ function getMsgByCode(code) {
     case CodeUserNotExist:
       return i18n.global.t('error.userNotExist')
     case CodePhoneRegistered:
-      return i18m.global.t('error.phoneRegistered')
+      return i18n.global.t('error.phoneRegistered')
     case CodeAddressNotExist:
       return i18n.global.t('error.addressNotExist')
     case CodePhoneNumberNotApply:

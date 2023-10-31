@@ -2,14 +2,11 @@
   <div class="nid-apply">
     <span class="nid-apply-header">{{ t('button.register') + t('label.user') }}</span>
     <el-form :model="nidForm" label-width="auto" class="nid-apply-form" ref="nidFormRef" :rules="applyRules">
-      <el-form-item :label="t('label.userID')" prop="userID">
-        <el-input v-model="nidForm.userID" :placeholder="t('holder.plsInputUserID')"></el-input>
+      <el-form-item :label="t('label.phoneNumber')" prop="phoneNumber">
+        <el-input v-model="nidForm.phoneNumber" :placeholder="t('holder.plsInputPhoneNumber')"></el-input>
       </el-form-item>
       <el-form-item :label="t('label.password')" prop="password">
         <el-input v-model="nidForm.password" type="password" :show-password="true" :placeholder="t('holder.plsInputPassword')"></el-input>
-      </el-form-item>
-      <el-form-item :label="t('label.phoneNumber')" prop="phoneNumber">
-        <el-input v-model="nidForm.phoneNumber" :placeholder="t('holder.plsInputPhoneNumber')"></el-input>
       </el-form-item>
       <el-form-item :label="t('label.username')" prop="username">
         <el-input v-model="nidForm.username" :placeholder="t('holder.plsInputUsername')"></el-input>
@@ -38,6 +35,7 @@ function handleRegistry(){
   nidFormRef.value.validate((valid) => {
     if(valid){
       waitApply.value = true
+      nidForm.value.userID = nidForm.value.phoneNumber
       registerNID(nidForm.value).then(response => {
         emit('register', response.data.user)
         ElMessage.success(t('tip.registerSuccess'))
@@ -51,7 +49,6 @@ function handleRegistry(){
 }
 
 const applyRules = {
-  userID: [{required: true, message: t('holder.plsInputUserID'), trigger: 'change'}],
   password: [{required: true, message: t('holder.plsInputPassword'), trigger: 'change'}],
   phoneNumber: [{required: true, message: t('holder.plsInputPhoneNumber'), trigger: 'change'}],
   username: [{required: true, message: t('holder.plsInputUsername'), trigger: 'change'}],

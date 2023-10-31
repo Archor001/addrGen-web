@@ -53,7 +53,7 @@
     "plsInputStandardISPPrefix": "请输入标准格式的ISP地址前缀(选填，例如2001:0250)",
     "plsInputUserID": "请输入学号/工号",
     "plsInputUsername": "请输入用户名",
-    "userFilter": "可按学号、用户名模糊搜索",
+    "userFilter": "可按手机号、用户名模糊搜索",
     "username": "请输入用户名"
   },
   "hour": "小时",

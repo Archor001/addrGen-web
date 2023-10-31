@@ -21,6 +21,20 @@ export function queryAddress(queryAddress){
   })
 }
 
+// 批量获取地址
+export function getAddress(offset, limit, content){
+  return service.get(AddressURL+'es', {
+    params:{
+      offset, limit, content
+    }
+  })
+}
+
+// 删除地址
+export function deleteAddress(){
+
+}
+
 // 修改ISP
 export function updateISP(isp){
   return service.post(ISPURL, {

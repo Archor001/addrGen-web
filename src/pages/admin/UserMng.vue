@@ -1,49 +1,33 @@
 <template>
   <div class="user-management-page">
-    <el-row justify="space-between">
-      <el-col :span="6" style="text-align: left">
-        <el-button type="primary" plain round @click="addUserVisible = true">{{ t('button.register') + t('label.user') }}</el-button>
-      </el-col>
-      <el-col :span="12">
-        <el-input v-model="userFilterContent" @keyup.enter="handleGetUser()" :placeholder="t('holder.userFilter')">
-          <template #append>
-            <el-button @click="handleGetUser()"><el-icon><Search /></el-icon></el-button>
-          </template>
-        </el-input>
-      </el-col>
-    </el-row>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <el-button type="primary" plain round @click="addUserVisible = true">{{ t('button.register') + t('label.user') }}</el-button>
+      <el-button type="primary" text @click="handleGetUser()" :icon="Refresh"></el-button>
+      <el-input v-model="userFilterContent" @keyup.enter="handleGetUser()" :placeholder="t('holder.userFilter')" style="width: 30%;">
+        <template #append>
+          <el-button @click="handleGetUser()"><el-icon><Search /></el-icon></el-button>
+        </template>
+      </el-input>
+    </div>
 
     <el-row justify="center" style="margin-top: 32px">
       <el-table :data="userList" class="user-list-table" style="width: 100%" table-layout="auto">
+        <el-table-column align="center" :label="t('label.NID')" prop="nid">
+        </el-table-column>
         <el-table-column align="center" :label="t('label.username')" prop="username">
         </el-table-column>
         <el-table-column align="center" :label="t('label.userID')" prop="userID">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.NID')" prop="nid">
-        </el-table-column>
         <el-table-column align="center" :label="t('label.phoneNumber')" prop="phoneNumber">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.address')">
+        <el-table-column align="center" :label="t('label.status')" prop="status">
           <template #default="scope">
-            <el-tag v-if="!!scope.row.address && scope.row.address.length > 0" type="primary">{{ scope.row.address }}</el-tag>
-            <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" :label="t('label.ISPPrefix')">
-          <template #default="scope">
-            <el-tag v-if="!!scope.row.prefix && scope.row.prefix.length > 0" type="primary">{{ scope.row.prefix }}</el-tag>
-            <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column align="center" :label="t('label.registerTime')">
-          <template #default="scope">
-            <el-tag v-if="!!scope.row.registerTime" type="primary">{{ formatStamp(scope.row.registerTime) }}</el-tag>
-            <el-tag v-else type="info">{{ t('label.notApplyYet') }}</el-tag>
+            <el-tag :type="formatStatusTag(scope.row.status)">{{ formatStatus(scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column align="center" :label="t('label.option')">
           <template #default="scope">
-            <el-button type="danger" plain @click="handleDeleteUser(scope.row)" size="small">{{ t('button.delete') }}</el-button>
+            <el-button type="danger" v-if="scope.row.status != 3" @click="handleDeleteUser(scope.row)" size="small">{{ t('button.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -65,10 +49,10 @@
 </template>
 
 <script setup>
-import { Search } from '@icon-park/vue-next';
+import { Search, Refresh } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
 import { getUser, deleteUser } from '../../api/user'
-import { formatStamp } from '../../utils/index'
+import { formatStatusTag, formatStatus } from '../../utils/index'
 import UserRegister from '../../components/user/UserRegister.vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
@@ -114,7 +98,7 @@ function handleDeleteUser(user){
     confirmButtonText: t('confirm'),
     cancelButtonText: t('cancel')
   }).then(() => {
-    deleteUser(user.nid).then(response => {
+    deleteUser(user.phoneNumber).then(response => {
       ElMessage.success(t('tip.deleteSuccess'))
       handleGetUser()
     }).catch(res => {

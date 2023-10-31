@@ -26,20 +26,7 @@
       </div>
 
       <!-- 地址列表 -->
-      <el-table :data="userList" class="addr-list-table" table-layout="auto">
-        <el-table-column align="center" :label="t('label.username')" prop="username">
-        </el-table-column>
-        <el-table-column align="center" :label="t('label.userID')" prop="userID">
-        </el-table-column>
-        <el-table-column align="center" :label="t('label.NID')" prop="nid">
-        </el-table-column>
-        <el-table-column align="center" :label="t('label.phoneNumber')" prop="phoneNumber">
-        </el-table-column>
-        <el-table-column align="center" :label="t('label.userStatus')" prop="status">
-          <template #default="scope">
-            <el-tag :type="formatStatusTag(scope.row.status)">{{ formatStatus(scope.row.status) }}</el-tag>
-          </template>
-        </el-table-column>
+      <el-table :data="addressList" class="addr-list-table" table-layout="auto">
         <el-table-column align="center" :label="t('label.address')">
           <template #default="scope">
             <el-tag v-if="!!scope.row.address && scope.row.address.length > 0" type="primary">{{ scope.row.address }}</el-tag>
@@ -54,12 +41,18 @@
         </el-table-column>
         <el-table-column align="center" :label="t('label.addrStatus')">
           <template #default="scope">
-            <el-tag :type="formatStatusTag(scope.row.addrStatus)">{{ formatStatus(scope.row.addrStatus) }}</el-tag>
+            <el-tag :type="formatStatusTag(scope.row.status)">{{ formatStatus(scope.row.status) }}</el-tag>
           </template>
+        </el-table-column>
+        <el-table-column align="center" :label="t('label.username')" prop="username">
+        </el-table-column>
+        <el-table-column align="center" :label="t('label.phoneNumber')" prop="phoneNumber">
+        </el-table-column>
+        <el-table-column align="center" :label="t('label.NID')" prop="nid">
         </el-table-column>
         <el-table-column align="center" :label="t('label.option')">
           <template #default="scope">
-            <el-button type="danger" plain @click="handleDeleteUser(scope.row)" size="small">{{ t('button.delete') }}</el-button>
+            <el-button type="danger" @click="handleDeleteUser(scope.row)" size="small">{{ t('button.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -79,8 +72,7 @@
 import { InfoFilled } from '@element-plus/icons-vue'
 import { Search, Refresh, EditOne } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
-import { getUser, deleteUser } from '../../api/user';
-import { getISP } from '../../api/address';
+import { getAddress, deleteAddress, getISP } from '../../api/address';
 import { formatStamp, formatStatus, formatStatusTag } from '../../utils';
 import IspManage from '../../components/address/IspManage.vue';
 import { useI18n } from 'vue-i18n';
@@ -97,7 +89,7 @@ const ISPLength = ref(0)
 const currentPage = ref(1)
 const pageSize = ref(10)
 const total = ref(0)
-const userList = ref([])
+const addressList = ref([])
 
 // 初始化地址管理页面
 function initAddressMng(){
@@ -117,10 +109,10 @@ function flushISPandAddress(){
   getISP().then(response => {
     ISPPrefix.value = response.data.isp
     ISPLength.value = response.data.length
-    return getUser((currentPage.value - 1) * pageSize.value, pageSize.value, userFilterContent.value)
+    return getAddress((currentPage.value - 1) * pageSize.value, pageSize.value, userFilterContent.value)
   }).then(resp => {
     ispLoadingInstance.close()
-    userList.value = resp.data.users
+    addressList.value = resp.data.addresses
     total.value = resp.data.count
   }).catch(res => {
     ElMessage.error(res.data.msg)
@@ -136,8 +128,8 @@ function flushAddress(){
     fullscreen: false,
     target: '.addr-list-table'
   })
-  getUser((currentPage.value - 1) * pageSize.value, pageSize.value, userFilterContent.value).then(response => {
-    userList.value = response.data.users
+  getAddress((currentPage.value - 1) * pageSize.value, pageSize.value, userFilterContent.value).then(response => {
+    addressList.value = response.data.addresses
     total.value = response.data.count
   }).catch(res => {
     ElMessage.error(res.data.msg)
@@ -216,7 +208,10 @@ function handleSizeChange(val){
   align-items: center;
 }
 .addr-list-table{
-  width: 88%;
+  width: 90%;
+  box-sizing: border-box;
+
+  border-radius: 8px;
   margin-top: 30px;
 }
 </style>

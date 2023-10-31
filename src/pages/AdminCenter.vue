@@ -1,6 +1,7 @@
 <template>
   <base-container>
     <template #center>
+      <base-nav-item name="UserManage">{{ t('title.userManage') }}</base-nav-item>
       <base-nav-item name="AddressManage">{{ t('title.addressManage') }}</base-nav-item>
       <base-nav-item name="AddressQuery">{{ t('label.addressQuery') }}</base-nav-item>
       <base-nav-item name="SystemManage">{{ t('label.platformManage') }}</base-nav-item>

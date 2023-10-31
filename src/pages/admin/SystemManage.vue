@@ -85,17 +85,18 @@ function handleRegenAddress(){
   ElMessageBox.confirm(t('warning.changeISPTakesTime'),t('title.warning'),{
     confirmButtonText: t('confirm'),
     cancelButtonText: t('cancel')
-  })
-  const loadingInstance = ElLoading.service({
-    fullscreen: false,
-    target: regenAddrRef.value.$el
-  })
-  regenerateAddress().then(response => {
-    ElMessage.success(t('tip.regenSuccess'))
-  }).catch(res => {
-    ElMessage.error(res.data.msg)
-  }).finally(() => {
-    loadingInstance.close()
+  }).then(() => {
+    const loadingInstance = ElLoading.service({
+      fullscreen: false,
+      target: regenAddrRef.value.$el
+    })
+    regenerateAddress().then(response => {
+      ElMessage.success(t('tip.regenSuccess'))
+    }).catch(res => {
+      ElMessage.error(res.data.msg)
+    }).finally(() => {
+      loadingInstance.close()
+    })
   })
 }
 

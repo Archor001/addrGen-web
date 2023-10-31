@@ -24,6 +24,10 @@ const routes = [
     component: () => import('../pages/AdminCenter.vue'),
     children: [{
       path: '',
+      name: 'UserManage',
+      component: () => import('../pages/admin/UserMng.vue')
+    },{
+      path: 'address',
       name: 'AddressManage',
       component: () => import('../pages/admin/AddressMng.vue')
     },{

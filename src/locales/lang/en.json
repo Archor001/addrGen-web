@@ -10,7 +10,7 @@
     "plsInputNid": "Please input NID",
     "plsInputPassword": "Please input password",
     "plsInputStandardISPPrefix": "Please input standart ISP address prefix(such as 2001:0250)",
-    "userFilter": "Search by username and userID",
+    "userFilter": "Search by username and phoneNumber",
     "username": "Please input username"
   },
   "label": {
