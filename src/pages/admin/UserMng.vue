@@ -27,6 +27,7 @@
         </el-table-column>
         <el-table-column align="center" :label="t('label.option')">
           <template #default="scope">
+            <el-button type="primary" v-if="scope.row.status != 3" @click="handleEditUser(scope.row)" size="small">{{ t('button.edit') }}</el-button>
             <el-button type="danger" v-if="scope.row.status != 3" @click="handleDeleteUser(scope.row)" size="small">{{ t('button.delete') }}</el-button>
           </template>
         </el-table-column>
@@ -45,6 +46,8 @@
         </template>
       </user-register>
     </el-dialog>
+
+    <edit-user-dialog v-model="editUserVisible" :user="initUser" @success="confirmEdit()"></edit-user-dialog>
   </div>
 </template>
 
@@ -53,6 +56,7 @@ import { Search, Refresh } from '@icon-park/vue-next';
 import { ref, onMounted, nextTick } from 'vue';
 import { getUser, deleteUser } from '../../api/user'
 import { formatStatusTag, formatStatus } from '../../utils/index'
+import EditUserDialog from '../../components/user/EditUserDialog.vue';
 import UserRegister from '../../components/user/UserRegister.vue';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n()
@@ -90,6 +94,19 @@ function handleGetUser(){
   }).finally(()=>{
     loadingInstance.close()
   })
+}
+
+// 修改用户
+const editUserVisible = ref(false)
+const initUser = ref({})
+function handleEditUser(user){
+  editUserVisible.value = true
+  initUser.value = user
+}
+
+function confirmEdit(){
+  editUserVisible.value = false
+  handleGetUser()
 }
 
 // 删除用户
