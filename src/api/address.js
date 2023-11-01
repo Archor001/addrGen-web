@@ -1,6 +1,7 @@
 import service from "./basic";
 
 const AddressURL = '/api/admin/address'
+const QueryAddressURL = '/api/admin/query'
 const RegenAddressURL = '/api/admin/regen/address'
 const ISPURL = '/api/admin/isp'
 
@@ -13,7 +14,16 @@ export function applyAddress(address){
 }
 
 // 地址查询
-export function queryAddress(queryAddress){
+export function queryAddress(phoneNumber){
+  return service.get(QueryAddressURL, {
+    params:{
+      phoneNumber
+    }
+  })
+}
+
+// 地址溯源
+export function traceAddress(queryAddress){
   return service.get(AddressURL, {
     params:{
       queryAddress
