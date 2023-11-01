@@ -89,7 +89,7 @@
                 <span style="margin-left: 15px; font-size: 18px;">{{ t('label.addressStatus') }}</span>
               </div>
             </template>
-            <el-tag class="addr-query-result-font" :type="formatStatusTag(traceResult.status)">{{ formatStatus(traceResult.status) }}</el-tag>
+            <el-tag :type="formatStatusTag(traceResult.status)">{{ formatStatus(traceResult.status) }}</el-tag>
           </el-descriptions-item>
         </el-descriptions>
       </div>
@@ -219,5 +219,6 @@ const traceRules = {
 }
 .addr-query-result-font{
   font-size: 14px;
+  margin-top: 10px;
 }
 </style>

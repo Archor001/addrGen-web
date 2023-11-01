@@ -22,6 +22,7 @@
     "addressNotExist": "查询地址不存在",
     "decryptFail": "解密失败",
     "deleteUserFail": "删除用户失败",
+    "editUserFailed": "修改用户失败",
     "encryptFail": "加密失败",
     "filterAddressFailed": "批量获取地址失败",
     "generateAddressFail": "地址生成失败",

@@ -43,7 +43,7 @@ export const CodeRegenAddressFailed = 10020       // 重新生成地址失败
 export const CodeFilterAddressFailed = 10021      // 批量获取地址失败
 export const CodePhoneNumberNoAddress = 10022     // 此手机号未生成对应的IPv6地址（或者地址已被删除）
 export const CodeQueryAddressFailed = 10023       // 查询地址失败
-
+export const CodeEditUserFailed = 10024     // 修改用户失败
 
 function getMsgByCode(code) {
   switch(code) {
@@ -108,6 +108,8 @@ function getMsgByCode(code) {
       return i18n.global.t('error.phoneNumberNoAddress')
     case CodeQueryAddressFailed:
       return i18n.global.t('error.queryAddressFail')
+    case CodeEditUserFailed:
+      return i18n.global.t('error.editUserFailed')  
     default:
       return i18n.global.t('error.unknown')
   }
