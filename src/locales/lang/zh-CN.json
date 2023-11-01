@@ -76,6 +76,7 @@
     "addressQuery": "地址查询",
     "addressQueryFail": "地址查询失败！",
     "addressQuerySuccess": "地址查询成功！",
+    "addressStatus": "地址状态",
     "addressTrace": "地址溯源",
     "addressTraceFail": "地址溯源失败！",
     "addressTraceSuccess": "地址溯源成功！",

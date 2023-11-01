@@ -46,7 +46,7 @@
       <!-- Result -->
       <div class="addr-query-result" v-if="!!traceResultType">
         <div class="addr-query-result-header">{{ (traceResultType == ResultTypeSuccess) ? t('label.addressTraceSuccess') : t('label.addressTraceFail') }}</div>
-        <el-descriptions :column="4" size="default" direction="vertical" border v-if="(traceResultType == ResultTypeSuccess)" style="width: 100%">
+        <el-descriptions :column="3" size="default" direction="vertical" border v-if="(traceResultType == ResultTypeSuccess)" style="width: 100%">
           <el-descriptions-item align="center">
             <template #label>
               <div style="display: flex; align-items: center;justify-content: center;">
@@ -83,6 +83,14 @@
             </template>
             <span class="addr-query-result-font">{{ traceResult.phoneNumber }}</span>
           </el-descriptions-item>
+          <el-descriptions-item align="center">
+            <template #label>
+              <div style="display: flex; align-items: center;justify-content: center;">
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.addressStatus') }}</span>
+              </div>
+            </template>
+            <el-tag class="addr-query-result-font" :type="formatStatusTag(traceResult.status)">{{ formatStatus(traceResult.status) }}</el-tag>
+          </el-descriptions-item>
         </el-descriptions>
       </div>
 
@@ -94,7 +102,7 @@
 <script setup>
 import { Mail, Phone, Time, User, People, Computer } from '@icon-park/vue-next';
 import { ref } from 'vue';
-import { formatStamp } from '../../utils/index'
+import { formatStamp, formatStatusTag, formatStatus } from '../../utils/index'
 import { queryAddress, traceAddress, ResultTypeSuccess, ResultTypeFail } from '../../api/address'
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -211,6 +219,5 @@ const traceRules = {
 }
 .addr-query-result-font{
   font-size: 14px;
-  margin-top: 10px;
 }
 </style>
