@@ -44,7 +44,9 @@ export function queryAddress(nid){
 
 // 地址停用
 export function suspendAddress(address){
-  return service.post(SuspendAddressURL,address)
+  return service.post(SuspendAddressURL,{
+    address
+  })
 }
 
 // 地址删除

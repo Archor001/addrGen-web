@@ -40,7 +40,9 @@ export function editUser(user) {
 
 // 停用用户
 export function suspendUser(nid){
-  return service.post(SuspendUserURL,nid)
+  return service.post(SuspendUserURL,{
+    nid
+  })
 }
 
 // 批量获取用户
