@@ -55,8 +55,8 @@ function flushConfig(){
     target: addrISPRef.value.$el
   })
   getConfig().then(response => {
-    ISPPrefix.value = response.data.isp
-    ISPLength.value = response.data.length
+    ISPPrefix.value = response.data.isp.isp
+    ISPLength.value = response.data.isp.length
     syncAddressGap.value = response.data.syncGap
   }).catch(res => {
     ElMessage.error(res.data.msg)
