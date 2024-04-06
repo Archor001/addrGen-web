@@ -124,7 +124,8 @@
     "querySuccess": "查询成功",
     "regenSuccess": "重新生成地址成功",
     "registerSuccess": "注册成功",
-    "setSuccess": "设置成功"
+    "setSuccess": "设置成功",
+    "traceSuccess": "溯源成功"
   },
   "title": {
     "addressManage": "地址管理",

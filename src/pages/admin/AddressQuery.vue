@@ -86,10 +86,18 @@
           <el-descriptions-item align="center">
             <template #label>
               <div style="display: flex; align-items: center;justify-content: center;">
-                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.addressStatus') }}</span>
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.userStatus') }}</span>
               </div>
             </template>
             <el-tag :type="formatStatusTag(traceResult.status)">{{ formatStatus(traceResult.status) }}</el-tag>
+          </el-descriptions-item>
+          <el-descriptions-item align="center">
+            <template #label>
+              <div style="display: flex; align-items: center;justify-content: center;">
+                <span style="margin-left: 15px; font-size: 18px;">{{ t('label.addressStatus') }}</span>
+              </div>
+            </template>
+            <el-tag :type="formatStatusTag(traceResult.addressStatus)">{{ formatStatus(traceResult.addressStatus) }}</el-tag>
           </el-descriptions-item>
         </el-descriptions>
       </div>
