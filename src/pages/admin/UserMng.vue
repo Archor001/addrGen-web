@@ -16,8 +16,8 @@
         </el-table-column>
         <el-table-column align="center" :label="t('label.username')" prop="username">
         </el-table-column>
-        <el-table-column align="center" :label="t('label.userID')" prop="userID">
-        </el-table-column>
+        <!-- <el-table-column align="center" :label="t('label.userID')" prop="userID">
+        </el-table-column> -->
         <el-table-column align="center" :label="t('label.phoneNumber')" prop="phoneNumber">
         </el-table-column>
         <el-table-column align="center" :label="t('label.status')" prop="status">
