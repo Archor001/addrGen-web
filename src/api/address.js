@@ -41,8 +41,12 @@ export function getAddress(offset, limit, content){
 }
 
 // 删除地址
-export function deleteAddress(){
-
+export function deleteAddress(address){
+  return service.delete(AddressURL, {
+    params: {
+      address
+    }
+  })
 }
 
 // 修改ISP

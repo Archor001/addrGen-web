@@ -1,5 +1,6 @@
 {
   "ask": {
+    "deleteAddress": "确认删除此地址？",
     "deleteUser": "确定删除此用户？",
     "sureToChangeISP": "确定要修改ISP地址前缀，此操作需要重新生成地址，可能耗时较长"
   },

@@ -1,4 +1,7 @@
 {
+  "ask": {
+    "deleteAddress": "Sure to delete this address?"
+  },
   "back": "Back",
   "button": {
     "addressQuery": "Query Address",

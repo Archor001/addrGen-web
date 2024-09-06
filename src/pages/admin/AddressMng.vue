@@ -52,7 +52,7 @@
         </el-table-column>
         <el-table-column align="center" :label="t('label.option')">
           <template #default="scope">
-            <el-button type="danger" @click="handleDeleteUser(scope.row)" size="small">{{ t('button.delete') }}</el-button>
+            <el-button type="danger" @click="handleDeleteAddress(scope.row)" size="small">{{ t('button.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -150,13 +150,13 @@ function confirmSubmit(){
   initAddressMng()
 }
 
-// 删除用户
-function handleDeleteUser(user){
-  ElMessageBox.confirm(t('ask.deleteUser'),'Tip',{
+// 删除地址
+function handleDeleteAddress(row){
+  ElMessageBox.confirm(t('ask.deleteAddress'),'Tip',{
     confirmButtonText: t('confirm'),
     cancelButtonText: t('cancel')
   }).then(() => {
-    deleteUser(user.phoneNumber).then(response => {
+    deleteAddress(row.address).then(response => {
       ElMessage.success(t('tip.deleteSuccess'))
       flushAddress()
     }).catch(res => {
